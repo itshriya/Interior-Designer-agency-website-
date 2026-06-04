@@ -1,11 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <title>Livora Interior Design | Premium Studio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Hero Background with Dark Overlay */
+        .hero-bg {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Bottom Section CTA Background */
+        .cta-bg {
+            background: linear-gradient(rgba(245, 242, 235, 0.85), rgba(245, 242, 235, 0.85)),
+                        url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Floating Blurred Sticky Navbar Effect */
+        .navbar-scrolled {
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Color Utility Classes to Match UI Spec Exactly */
+        .gold-text { color: #c59d5f; }
+        .gold-bg { background-color: #c59d5f; }
+        .gold-bg:hover { background-color: #a37a44; }
+        .gold-border { border-color: #e0d9cd; }
+    </style>
+</head>
+
+<body class="bg-[#f5f2eb] text-[#2c2a27]">
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex justify-between items-center h-20">
+
+                <div class="flex flex-col items-center group cursor-pointer">
+                    <div class="w-11 h-11 flex items-center justify-center border border-[#c59d5f] rounded-full text-[#c59d5f] font-serif text-xl tracking-widest font-light transition duration-300 group-hover:scale-105"><img src="Assets/icons/logo 3.png" alt="logo image"></div>
+                    <span class="text-white font-serif text-lg tracking-[0.25em] uppercase mt-1 transition duration-300 group-hover:text-[#c59d5f]">Livora</span>
+                    <span class="text-[9px] text-[#c59d5f] tracking-[0.4em] uppercase font-light -mt-0.5">Interior Design</span>
+                </div>
+
+                <div class="hidden md:flex items-center gap-10">
+                    <a href="#" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition duration-300">HOME</a>
+                    <a href="#" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition duration-300">ABOUT US</a>
+                    <a href="#" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition duration-300">BLOG</a>
+                    <a href="#" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition duration-300">CONTACT US</a>
+                    
+                    <button class="gold-bg text-white text-xs font-bold tracking-widest uppercase px-6 py-3.5 rounded transition duration-300 hover:scale-102 shadow-lg">
+                        Get Consultation
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-bg flex items-center relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full pt-20">
+            <div class="max-w-3xl text-white">
+                <p class="uppercase tracking-[0.4em] text-xs font-semibold mb-5 gold-text">
+                    Premium Interior Design Studio
+                </p>
+
+                <h1 class="text-5xl md:text-7xl font-serif font-normal leading-[1.15] mb-8 tracking-wide">
+                    Designing<br>Timeless Spaces<br>That Inspire
+                </h1>
+
+                <p class="text-base md:text-lg text-gray-300 mb-10 max-w-xl font-light leading-relaxed">
+                    We transform homes and commercial spaces into elegant, luxurious, and functional environments that reflect your lifestyle and vision.
+                </p>
+
+                <div class="flex flex-wrap gap-5">
+                    <button class="gold-bg px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase rounded text-white flex items-center gap-2 hover:translate-x-1 transition duration-300 shadow-xl">
+                        Explore Projects <span>→</span>
+                    </button>
+
+                    <button class="border border-white/40 bg-black/20 backdrop-blur-sm px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase rounded text-white flex items-center gap-2 hover:bg-white hover:text-black transition duration-300">
+                        Learn More <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+            <span class="text-white/50 text-[10px] tracking-[0.4em] uppercase font-medium">Scroll Down</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-white/60 to-transparent"></div>
+        </div>
+    </section>
+
+    <section class="py-28 bg-[#faf8f5]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+
+                <div class="lg:col-span-5">
+                    <div class="overflow-hidden rounded-2xl shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=1200&auto=format&fit=crop" 
+                             class="w-full h-auto object-cover transform hover:scale-105 transition duration-700" 
+                             alt="Luxury interior setting architecture">
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 lg:pl-6">
+                    <div class="flex items-center gap-4 mb-3">
+                        <span class="gold-text uppercase text-xs font-bold tracking-[0.3em]">About Livora</span>
+                        <div class="h-[1px] w-12 bg-[#c59d5f]/50"></div>
+                    </div>
+
+                    <h2 class="text-4xl md:text-5xl font-serif font-normal tracking-wide text-[#0d0d0d] mb-6 leading-[1.25]">
+                        Elegant Designs Crafted<br>For Modern Living
+                    </h2>
+
+                    <p class="text-gray-500 font-light leading-relaxed mb-8 max-w-xl">
+                        At Livora, we believe that every space has the potential to be extraordinary. Our team of passionate designers brings creativity, craftsmanship, and attention to detail to every project we undertake.
+                    </p>
+
+                    <button class="bg-[#0d0d0d] text-white px-8 py-4 text-xs font-bold tracking-[0.2em] uppercase rounded flex items-center gap-2 hover:bg-[#c59d5f] transition duration-300 shadow-md">
+                        Discover More <span>→</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-[#faf8f5] pb-28">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+            <div class="text-center mb-16">
+                <div class="flex justify-center items-center gap-4 mb-3">
+                    <span class="gold-text uppercase text-xs font-bold tracking-[0.3em]">Our Services</span>
+                    <div class="h-[1px] w-12 bg-[#c59d5f]/50"></div>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-serif text-[#0d0d0d] tracking-wide">
+                    What We Offer
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <div class="bg-[#fcfbfa] border gold-border p-10 rounded-xl transition duration-300 hover:shadow-xl group">
+                    <div class="text-[#c59d5f] mb-6 transform group-hover:scale-110 transition duration-300 origin-left">
+                        <svg class="w-8 h-8 stroke-current fill-none font-light" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-serif text-[#0d0d0d] mb-3">Residential Design</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
+                        Beautiful, functional and personalized homes designed for the way you live.
+                    </p>
+                    <a href="#" class="text-xs font-bold tracking-[0.15em] uppercase text-[#0d0d0d] hover:text-[#c59d5f] flex items-center gap-2 transition duration-300">
+                        Read More <span>→</span>
+                    </a>
+                </div>
+
+                <div class="bg-[#fcfbfa] border gold-border p-10 rounded-xl transition duration-300 hover:shadow-xl group">
+                    <div class="text-[#c59d5f] mb-6 transform group-hover:scale-110 transition duration-300 origin-left">
+                        <svg class="w-8 h-8 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="1.2">
+                            <rect x="2" y="2" width="20" height="20" rx="2" ry="2"/>
+                            <path d="M7 2v20M17 2v20M2 12h20M2 7h20M2 17h20"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-serif text-[#0d0d0d] mb-3">Commercial Spaces</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
+                        Inspiring workspaces and commercial interiors that elevate productivity.
+                    </p>
+                    <a href="#" class="text-xs font-bold tracking-[0.15em] uppercase text-[#0d0d0d] hover:text-[#c59d5f] flex items-center gap-2 transition duration-300">
+                        Read More <span>→</span>
+                    </a>
+                </div>
+
+                <div class="bg-[#fcfbfa] border gold-border p-10 rounded-xl transition duration-300 hover:shadow-xl group">
+                    <div class="text-[#c59d5f] mb-6 transform group-hover:scale-110 transition duration-300 origin-left">
+                        <svg class="w-8 h-8 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path d="M4 18v3M20 18v3M3 14h18M6 5h12a2 2 0 0 1 2 2v7H4V7a2 2 0 0 1 2-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-serif text-[#0d0d0d] mb-3">Furniture & Decor</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
+                        Curated furniture and décor selections that complete your dream space.
+                    </p>
+                    <a href="#" class="text-xs font-bold tracking-[0.15em] uppercase text-[#0d0d0d] hover:text-[#c59d5f] flex items-center gap-2 transition duration-300">
+                        Read More <span>→</span>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-20 bg-[#0d0d0d] text-white border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center md:text-left">
+
+                <div class="flex flex-col md:flex-row items-center gap-4 justify-center">
+                    <div class="text-[#c59d5f] mb-2 md:mb-0">
+                        <svg class="w-8 h-8 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="1.2">
+                            <circle cx="12" cy="8" r="7"/>
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-normal font-serif tracking-tight">250+</h3>
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-medium mt-1">Projects Completed</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center gap-4 justify-center">
+                    <div class="text-[#c59d5f] mb-2 md:mb-0">
+                        <svg class="w-8 h-8 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="1.2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-normal font-serif tracking-tight">15+</h3>
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-medium mt-1">Years Experience</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center gap-4 justify-center">
+                    <div class="text-[#c59d5f] mb-2 md:mb-0">
+                        <svg class="w-8 h-8 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-normal font-serif tracking-tight">120+</h3>
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-medium mt-1">Happy Clients</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center gap-4 justify-center">
+                    <div class="text-[#c59d5f] mb-2 md:mb-0">
+                        <svg class="w-8 h-8 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-normal font-serif tracking-tight">98%</h3>
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-medium mt-1">Client Satisfaction</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-bg py-32 text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            
+            <h2 class="text-4xl md:text-5xl font-serif font-normal tracking-wide text-[#0d0d0d] mb-4">
+                Ready To Transform Your Space?
+            </h2>
+
+            <p class="text-gray-600 font-light max-w-lg mx-auto text-sm md:text-base mb-10">
+                Let's create beautiful interiors that reflect your personality and elevate your everyday living.
+            </p>
+
+            <button class="gold-bg text-white px-10 py-5 text-xs font-bold tracking-[0.25em] uppercase rounded-md shadow-2xl hover:scale-102 transition duration-300 flex items-center gap-2 mx-auto">
+                Book Free Consultation <span class="text-base">→</span>
+            </button>
+
+        </div>
+    </section>
+
+    <footer class="bg-[#0d0d0d] text-white py-14 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+
+                <div class="flex flex-col items-center md:items-start">
+                    <h2 class="text-2xl font-serif tracking-[0.2em] uppercase text-white">Livora</h2>
+                    <span class="text-[9px] text-[#c59d5f] tracking-[0.35em] uppercase font-light mt-0.5">Studio of Design</span>
+                </div>
+
+                <p class="text-gray-500 text-xs tracking-wider font-light text-center md:text-right">
+                    © 2026 Livora Interior Design Studio. All Rights Reserved.
+                </p>
+
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById("navbar");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 40) {
+                navbar.classList.add("navbar-scrolled");
+                navbar.classList.remove("py-4");
+                navbar.classList.add("py-2");
+            } else {
+                navbar.classList.remove("navbar-scrolled");
+                navbar.classList.remove("py-2");
+                navbar.classList.add("py-4");
+            }
+        });
+    </script>
+
 </body>
 </html>
