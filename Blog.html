@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal | Livora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .hero-bg-blog {
+            min-height: 50vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .navbar-scrolled { background: rgba(13, 13, 13, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .gold-text { color: #c59d5f; }
+        .gold-bg { background-color: #c59d5f; }
+    </style>
+</head>
+
+<body class="bg-[#f5f2eb] text-[#2c2a27]">
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+            <a href="index.html" class="flex flex-col items-center group">
+                <div class="w-11 h-11 flex items-center justify-center border border-[#c59d5f] rounded-full text-[#c59d5f] font-serif text-xl tracking-widest transition duration-300 group-hover:scale-105">L</div>
+                <span class="text-white font-serif text-lg tracking-[0.25em] uppercase mt-1">Livora</span>
+            </a>
+            <div class="hidden md:flex items-center gap-10">
+                <a href="index.html" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition">HOME</a>
+                <a href="about.html" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition">ABOUT US</a>
+                <a href="blog.html" class="text-[#c59d5f] text-xs font-semibold tracking-[0.2em] transition">BLOG</a>
+                <a href="contact.html" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition">CONTACT US</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-bg-blog flex items-center justify-center relative pt-20">
+        <div class="text-center text-white">
+            <h1 class="text-5xl font-serif font-normal tracking-wide">Design Journal</h1>
+            <p class="mt-4 text-gray-400 font-light tracking-wide text-sm">Insights, trends, and inspiration from our studio.</p>
+        </div>
+    </section>
+
+    <section class="py-24">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid md:grid-cols-3 gap-10">
+                
+                <article class="group cursor-pointer">
+                    <div class="overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1616137466211-f939a420be84?q=80&w=800&auto=format&fit=crop" class="w-full h-64 object-cover transform transition-transform duration-700 group-hover:scale-110" alt="Minimalist living room">
+                    </div>
+                    <span class="text-[10px] gold-text uppercase tracking-[0.2em] font-bold">Interior Trends</span>
+                    <h3 class="text-2xl font-serif mt-2 mb-3 group-hover:text-[#c59d5f] transition duration-300">The Return of Warm Minimalism</h3>
+                    <p class="text-gray-500 font-light text-sm line-clamp-3">Explore how sterile whites are being replaced by warm beiges, textured fabrics, and organic shapes in modern home design.</p>
+                </article>
+
+                <article class="group cursor-pointer">
+                    <div class="overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=800&auto=format&fit=crop" class="w-full h-64 object-cover transform transition-transform duration-700 group-hover:scale-110" alt="Lighting">
+                    </div>
+                    <span class="text-[10px] gold-text uppercase tracking-[0.2em] font-bold">Architecture</span>
+                    <h3 class="text-2xl font-serif mt-2 mb-3 group-hover:text-[#c59d5f] transition duration-300">Mastering Natural Light</h3>
+                    <p class="text-gray-500 font-light text-sm line-clamp-3">A guide to architectural layouts that maximize sunlight, reduce energy consumption, and elevate your mood.</p>
+                </article>
+
+                <article class="group cursor-pointer">
+                    <div class="overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?q=80&w=800&auto=format&fit=crop" class="w-full h-64 object-cover transform transition-transform duration-700 group-hover:scale-110" alt="Furniture">
+                    </div>
+                    <span class="text-[10px] gold-text uppercase tracking-[0.2em] font-bold">Decor</span>
+                    <h3 class="text-2xl font-serif mt-2 mb-3 group-hover:text-[#c59d5f] transition duration-300">Curating Statement Pieces</h3>
+                    <p class="text-gray-500 font-light text-sm line-clamp-3">How to select and position bold furniture items without overwhelming the harmony of your living space.</p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#0d0d0d] text-white py-14 text-center">
+        <h2 class="text-2xl font-serif tracking-[0.2em] uppercase">Livora</h2>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+            navbar.classList.toggle("navbar-scrolled", window.scrollY > 40);
+        });
+    </script>
+</body>
+</html>

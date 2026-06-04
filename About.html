@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Livora | Premium Studio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        .hero-bg-about {
+            min-height: 60vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .navbar-scrolled {
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gold-text { color: #c59d5f; }
+        .gold-bg { background-color: #c59d5f; }
+        .gold-bg:hover { background-color: #a37a44; }
+    </style>
+</head>
+
+<body class="bg-[#f5f2eb] text-[#2c2a27]">
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex flex-col items-center group cursor-pointer">
+                    <div class="w-11 h-11 flex items-center justify-center border border-[#c59d5f] rounded-full text-[#c59d5f] font-serif text-xl tracking-widest font-light transition duration-300 group-hover:scale-105">L</div>
+                    <span class="text-white font-serif text-lg tracking-[0.25em] uppercase mt-1 transition duration-300 group-hover:text-[#c59d5f]">Livora</span>
+                </a>
+                <div class="hidden md:flex items-center gap-10">
+                    <a href="index.html" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition duration-300">HOME</a>
+                    <a href="about.html" class="text-[#c59d5f] text-xs font-semibold tracking-[0.2em] transition duration-300">ABOUT US</a>
+                    <a href="blog.html" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition duration-300">BLOG</a>
+                    <a href="contact.html" class="text-white text-xs font-semibold tracking-[0.2em] hover:text-[#c59d5f] transition duration-300">CONTACT US</a>
+                    <a href="contact.html" class="gold-bg text-white text-xs font-bold tracking-widest uppercase px-6 py-3.5 rounded transition-all duration-300 hover:-translate-y-1 active:scale-95 shadow-lg">Get Consultation</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-bg-about flex items-center justify-center relative pt-20 text-center">
+        <div class="max-w-3xl text-white px-6">
+            <span class="gold-text uppercase text-xs font-bold tracking-[0.3em] mb-4 block">Our Story</span>
+            <h1 class="text-5xl md:text-6xl font-serif font-normal tracking-wide">About Livora</h1>
+        </div>
+    </section>
+
+    <section class="py-24 bg-[#faf8f5]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl font-serif text-[#0d0d0d] mb-6 leading-tight">Design is not just what it looks like, it's how it feels.</h2>
+                    <p class="text-gray-500 font-light leading-relaxed mb-6">
+                        Founded in 2011, Livora emerged from a passion for architecture and deep appreciation for spatial harmony. We don't just decorate rooms; we curate experiences that resonate with the people who inhabit them.
+                    </p>
+                    <p class="text-gray-500 font-light leading-relaxed">
+                        Our approach is deeply collaborative. We listen intimately to our clients' needs, blending their vision with our expertise to create spaces that are structurally sound, aesthetically magnificent, and incredibly comfortable.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="overflow-hidden rounded-xl h-64 group">
+                        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Interior detail">
+                    </div>
+                    <div class="overflow-hidden rounded-xl h-64 mt-8 group">
+                        <img src="https://images.unsplash.com/photo-1600566753086-00f18efc2291?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Interior detail">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#0d0d0d] text-white py-14 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
+            <h2 class="text-2xl font-serif tracking-[0.2em] uppercase text-white">Livora</h2>
+            <p class="text-gray-500 text-xs tracking-wider font-light mt-4">© 2026 Livora Interior Design Studio. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 40) {
+                navbar.classList.add("navbar-scrolled", "py-2");
+                navbar.classList.remove("py-4");
+            } else {
+                navbar.classList.remove("navbar-scrolled", "py-2");
+                navbar.classList.add("py-4");
+            }
+        });
+    </script>
+</body>
+</html>
