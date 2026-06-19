@@ -169,7 +169,7 @@ loginForm.addEventListener("submit", async (e) => {
     try {
 
         const response = await fetch(
-            "http://localhost:8000/auth/login",
+            "http://127.0.0.1:8000/auth/login",
             {
                 method: "POST",
                 headers: {
@@ -190,10 +190,10 @@ loginForm.addEventListener("submit", async (e) => {
         );
 
         if(data.role === "admin"){
-            window.location.href = "/admin/dashboard.html";
+            window.location.href = "../admin/dashboard.html";
         }
         else{
-            window.location.href = "/dashboard.html";
+            window.location.href = "../user/dashboard.html";
         }
 
     } catch(error){

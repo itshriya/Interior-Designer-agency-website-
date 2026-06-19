@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livora Admin - Manage Users</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C59D5F',
+                        dark: '#0D0D0D',
+                        light: '#F8F6F2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light font-sans text-dark flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-dark text-white flex flex-col h-full">
+        <div class="p-6 text-center text-2xl font-bold tracking-widest text-gold border-b border-gray-800">
+            LIVORA
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Dashboard</a>
+            <a href="designs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Designs</a>
+            <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
+            <!-- Active State on Users -->
+            <a href="users.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">Users</a>
+            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Blogs</a>
+            <a href="settings.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Settings</a>
+        </nav>
+        <div class="p-4 border-t border-gray-800">
+            <button id="logoutBtn" class="w-full text-left px-4 py-2 text-red-400 hover:text-red-300 transition">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden">
+        
+        <!-- Top Navbar -->
+        <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 border-b border-gray-200">
+            <h1 class="text-xl font-bold">Manage Users</h1>
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium">Welcome, Admin</span>
+                <div class="w-8 h-8 rounded-full bg-gold text-dark flex items-center justify-center font-bold">A</div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-8 overflow-y-auto flex-1">
+            
+            <!-- Header Actions -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                
+                <!-- Search and Filter -->
+                <div class="flex items-center gap-4 w-full md:w-auto">
+                    <input type="text" id="searchUser" placeholder="Search by name or email..." class="w-full md:w-72 p-2 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-sm">
+                    <select id="roleFilter" class="p-2 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold text-sm bg-white">
+                        <option value="all">All Roles</option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-600 text-sm">
+                                <th class="px-6 py-4 border-b">User Info</th>
+                                <th class="px-6 py-4 border-b">Role</th>
+                                <th class="px-6 py-4 border-b">Joined Date</th>
+                                <th class="px-6 py-4 border-b text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            
+                            <!-- Dummy Row 1: Admin -->
+                            <tr class="hover:bg-gray-50 border-b border-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold">A</div>
+                                        <div>
+                                            <p class="font-medium text-dark text-sm">Admin System</p>
+                                            <p class="text-xs text-gray-500">admin@livora.com</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-gold bg-opacity-20 text-yellow-800 border border-gold">Admin</span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Jan 10, 2026</td>
+                                <td class="px-6 py-4 text-right text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-800 mr-3 view-btn" data-id="user_1" data-name="Admin System">View Details</button>
+                                </td>
+                            </tr>
+
+                            <!-- Dummy Row 2: User -->
+                            <tr class="hover:bg-gray-50 border-b border-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold">JD</div>
+                                        <div>
+                                            <p class="font-medium text-dark text-sm">John Doe</p>
+                                            <p class="text-xs text-gray-500">john@gmail.com</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600 border border-gray-200">User</span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Feb 15, 2026</td>
+                                <td class="px-6 py-4 text-right text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-800 mr-3 view-btn" data-id="user_2" data-name="John Doe">View Details</button>
+                                </td>
+                            </tr>
+
+                            <!-- Dummy Row 3: User -->
+                            <tr class="hover:bg-gray-50 border-b border-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold">SJ</div>
+                                        <div>
+                                            <p class="font-medium text-dark text-sm">Sarah Jenkins</p>
+                                            <p class="text-xs text-gray-500">sarah.j@example.com</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600 border border-gray-200">User</span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Mar 22, 2026</td>
+                                <td class="px-6 py-4 text-right text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-800 mr-3 view-btn" data-id="user_3" data-name="Sarah Jenkins">View Details</button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                    <div>Showing 1 to 10 of 1,248 users</div>
+                    <div class="flex gap-2">
+                        <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">Previous</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 bg-gray-50">1</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50">2</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50">3</button>
+                        <span class="px-2 py-1">...</span>
+                        <button class="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- User Details Modal -->
+    <div id="userModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 m-4">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h2 class="text-xl font-bold" id="modalUserTitle">User Details</h2>
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-2xl" id="modalUserInitials">JD</div>
+                <div>
+                    <h3 class="font-bold text-lg text-dark" id="modalUserName">John Doe</h3>
+                    <p class="text-sm text-gray-500" id="modalUserEmail">john@gmail.com</p>
+                    <span class="inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600 border border-gray-200" id="modalUserRole">User</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-6 border-t pt-4">
+                <div class="bg-gray-50 p-3 rounded border border-gray-100">
+                    <p class="text-xs text-gray-500 mb-1">Total Orders</p>
+                    <p class="font-bold text-lg text-dark" id="modalTotalOrders">3</p>
+                </div>
+                <div class="bg-gray-50 p-3 rounded border border-gray-100">
+                    <p class="text-xs text-gray-500 mb-1">Total Spent</p>
+                    <p class="font-bold text-lg text-gold" id="modalTotalSpent">$113,500</p>
+                </div>
+                <div class="bg-gray-50 p-3 rounded border border-gray-100 col-span-2">
+                    <p class="text-xs text-gray-500 mb-1">Account ID</p>
+                    <p class="font-mono text-sm text-dark truncate" id="modalUserId">64a1b2c3d4e5f6g7h8i9j0k1</p>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 border-t pt-4">
+                <button id="cancelModalBtn" class="px-6 py-2 bg-dark text-white rounded hover:bg-gray-800 transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script>
+        // Temporary Vanilla JS for the Modal UI
+        const modal = document.getElementById('userModal');
+        const viewBtns = document.querySelectorAll('.view-btn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelModalBtn = document.getElementById('cancelModalBtn');
+
+        viewBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const userName = this.getAttribute('data-name');
+                const initials = userName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                
+                // In a real application, you would fetch user data via GET /users/{id}
+                document.getElementById('modalUserName').innerText = userName;
+                document.getElementById('modalUserInitials').innerText = initials;
+                
+                // For demonstration, mock dynamic info based on the role
+                if(userName === "Admin System") {
+                    document.getElementById('modalUserEmail').innerText = "admin@livora.com";
+                    document.getElementById('modalUserRole').innerText = "Admin";
+                    document.getElementById('modalUserRole').className = "inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-gold bg-opacity-20 text-yellow-800 border border-gold";
+                    document.getElementById('modalTotalOrders').innerText = "N/A";
+                    document.getElementById('modalTotalSpent').innerText = "$0";
+                } else {
+                    document.getElementById('modalUserRole').innerText = "User";
+                    document.getElementById('modalUserRole').className = "inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600 border border-gray-200";
+                    // Just keeping the default mock stats for users
+                }
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        });
+
+        const closeModal = () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        };
+
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelModalBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livora Admin - Edit Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C59D5F',
+                        dark: '#0D0D0D',
+                        light: '#F8F6F2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light font-sans text-dark flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-dark text-white flex flex-col h-full">
+        <div class="p-6 text-center text-2xl font-bold tracking-widest text-gold border-b border-gray-800">
+            LIVORA
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Dashboard</a>
+            <a href="designs.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">Designs</a>
+            <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
+            <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Users</a>
+            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Blogs</a>
+            <a href="settings.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Settings</a>
+        </nav>
+        <div class="p-4 border-t border-gray-800">
+            <button id="logoutBtn" class="w-full text-left px-4 py-2 text-red-400 hover:text-red-300 transition">Logout</button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden">
+        
+        <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 border-b border-gray-200">
+            <div class="flex items-center gap-4">
+                <a href="designs.html" class="text-gray-500 hover:text-dark transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </a>
+                <h1 class="text-xl font-bold" id="pageHeaderTitle">Edit Design</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium">Welcome, Admin</span>
+                <div class="w-8 h-8 rounded-full bg-gold text-dark flex items-center justify-center font-bold">A</div>
+            </div>
+        </header>
+
+        <div class="p-8 overflow-y-auto flex-1">
+            <div class="max-w-4xl bg-white rounded-lg shadow-sm border border-gray-100 p-8">
+                
+                <form id="editDesignForm">
+                    
+                    <div class="flex justify-between items-center mb-6 border-b pb-2">
+                        <h2 class="text-lg font-bold">Design Details</h2>
+                        <span class="text-sm text-gray-500 font-mono" id="displayDesignId">ID: Loading...</span>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Design Title</label>
+                        <input type="text" id="title" name="title" required value="Modern Minimalist Living Room" class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                            <select id="category" name="category" required class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold bg-white">
+                                <option value="Living Room" selected>Living Room</option>
+                                <option value="Bedroom">Bedroom</option>
+                                <option value="Kitchen">Kitchen</option>
+                                <option value="Bathroom">Bathroom</option>
+                                <option value="Office">Office</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+                            <input type="number" id="price" name="price" required min="0" step="100" value="50000" class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <textarea id="description" name="description" required rows="5" class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold resize-y">A sleek, open-concept living area with dark accents, featuring a modular sofa and gold-trimmed coffee table. Perfect for urban apartments.</textarea>
+                    </div>
+
+                    <h2 class="text-lg font-bold mb-6 mt-10 border-b pb-2">Media Gallery</h2>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Current Images</label>
+                        <div class="flex flex-wrap gap-4" id="currentImagesContainer">
+                            <div class="w-32 h-32 rounded border border-gray-200 overflow-hidden relative group">
+                                <img src="https://via.placeholder.com/300x300?text=Living+Room+1" class="w-full h-full object-cover" alt="Current Image">
+                                <button type="button" class="absolute top-1 right-1 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow" title="Remove Image">
+                                    &times;
+                                </button>
+                            </div>
+                            <div class="w-32 h-32 rounded border border-gray-200 overflow-hidden relative group">
+                                <img src="https://via.placeholder.com/300x300?text=Living+Room+2" class="w-full h-full object-cover" alt="Current Image">
+                                <button type="button" class="absolute top-1 right-1 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow" title="Remove Image">
+                                    &times;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Add New Images</label>
+                        <div class="w-full border-2 border-dashed border-gray-300 rounded-lg p-8 flex flex-col items-center justify-center hover:border-gold hover:bg-gray-50 transition cursor-pointer relative" id="dropzone">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                            <p class="text-sm text-gray-600 mb-1"><span class="font-semibold text-gold">Click to upload</span></p>
+                            <input type="file" id="images" name="new_images" multiple accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        </div>
+                        <div id="imagePreviewContainer" class="flex flex-wrap gap-4 mt-4 hidden"></div>
+                    </div>
+
+                    <div class="flex justify-end gap-4 border-t pt-6">
+                        <a href="designs.html" class="px-6 py-2.5 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition font-medium">Cancel</a>
+                        <button type="submit" class="px-6 py-2.5 bg-dark text-white rounded hover:bg-gold transition font-medium" id="submitBtn">Save Changes</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/admin.js"></script>
+    <script>
+        // Simulate fetching design ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const designId = urlParams.get('id') || '1'; // Default to 1 if no param is passed
+        
+        document.getElementById('displayDesignId').innerText = `ID: ${designId}`;
+        
+        /* TODO: Connect to GET /designs/{id}
+           In a real scenario, you would fetch the design data here using the designId 
+           and populate the form inputs dynamically before showing the page.
+        */
+
+        // Handle New Image Preview
+        const imageInput = document.getElementById('images');
+        const previewContainer = document.getElementById('imagePreviewContainer');
+
+        imageInput.addEventListener('change', function() {
+            previewContainer.innerHTML = ''; 
+            
+            if (this.files && this.files.length > 0) {
+                previewContainer.classList.remove('hidden');
+                
+                Array.from(this.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgDiv = document.createElement('div');
+                        imgDiv.className = 'w-24 h-24 rounded border border-gray-200 overflow-hidden relative group';
+                        imgDiv.innerHTML = `
+                            <img src="${e.target.result}" class="w-full h-full object-cover" alt="Preview">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 hidden group-hover:flex items-center justify-center transition">
+                                <span class="text-white text-xs font-medium">Ready</span>
+                            </div>
+                        `;
+                        previewContainer.appendChild(imgDiv);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                previewContainer.classList.add('hidden');
+            }
+        });
+
+        // Handle Current Image Removal (Visual Mock)
+        document.querySelectorAll('#currentImagesContainer button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(confirm('Remove this image? This will be saved when you submit the form.')) {
+                    this.parentElement.style.display = 'none';
+                    // In reality, you'd track a list of deleted image URLs to send to the backend
+                }
+            });
+        });
+
+        // Form Submission Mock for PUT /designs/{id}
+        document.getElementById('editDesignForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Saving...";
+            submitBtn.disabled = true;
+
+            const formData = new FormData(this);
+            
+            /* TODO: Connect to FastAPI backend
+               fetch(`http://localhost:8000/designs/${designId}`, {
+                   method: 'PUT',
+                   headers: {
+                       'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                   },
+                   body: formData
+               }).then(...)
+            */
+
+            // Simulation
+            setTimeout(() => {
+                alert("Design updated successfully! (Mock)");
+                window.location.href = "designs.html";
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

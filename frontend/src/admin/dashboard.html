@@ -1,0 +1,101 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livora Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C59D5F',
+                        dark: '#0D0D0D',
+                        light: '#F8F6F2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light font-sans text-dark flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-dark text-white flex flex-col h-full">
+        <div class="p-6 text-center text-2xl font-bold tracking-widest text-gold border-b border-gray-800">
+            LIVORA
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">Dashboard</a>
+            <a href="designs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Designs</a>
+            <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
+            <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Users</a>
+            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Blogs</a>
+            <a href="settings.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Settings</a>
+        </nav>
+        <div class="p-4 border-t border-gray-800">
+            <button id="logoutBtn" class="w-full text-left px-4 py-2 text-red-400 hover:text-red-300 transition">Logout</button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden">
+        
+        <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 border-b border-gray-200">
+            <h1 class="text-xl font-bold">Overview</h1>
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium">Welcome, Admin</span>
+                <div class="w-8 h-8 rounded-full bg-gold text-dark flex items-center justify-center font-bold">A</div>
+            </div>
+        </header>
+
+        <div class="p-8 overflow-y-auto flex-1">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" id="statsContainer">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-sm text-gray-500 mb-1">Total Users</h3>
+                    <p class="text-3xl font-bold">1,248</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-sm text-gray-500 mb-1">Total Designs</h3>
+                    <p class="text-3xl font-bold">45</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-sm text-gray-500 mb-1">Pending Orders</h3>
+                    <p class="text-3xl font-bold">12</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-sm text-gray-500 mb-1">Total Revenue</h3>
+                    <p class="text-3xl font-bold text-gold">$142,000</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                    <h2 class="font-bold text-lg">Recent Orders</h2>
+                    <a href="orders.html" class="text-sm text-gold hover:underline">View All</a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-600 text-sm">
+                                <th class="px-6 py-3 border-b">Order ID</th>
+                                <th class="px-6 py-3 border-b">User</th>
+                                <th class="px-6 py-3 border-b">Design</th>
+                                <th class="px-6 py-3 border-b">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentOrdersTable">
+                            <tr class="hover:bg-gray-50 border-b border-gray-50">
+                                <td class="px-6 py-4 text-sm">#ORD-001</td>
+                                <td class="px-6 py-4 text-sm">jane@example.com</td>
+                                <td class="px-6 py-4 text-sm">Modern Living Room</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-800">Pending</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../admin/js/admin.js"></script>
+</body>
