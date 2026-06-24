@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Livora User Dashboard</title>
+    <title>My Consultations | Livora</title>
+
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -25,13 +26,13 @@
 
 </head>
 
-<body class="bg-light text-dark">
+<body class="bg-light">
 
 <div class="flex min-h-screen">
 
 <aside class="w-64 bg-dark text-white flex flex-col">
 
-    <div class="p-6 text-center border-b border-gray-800">
+    <div class="p-6 border-b border-gray-800">
 
         <h1 class="text-2xl font-bold text-gold">
             LIVORA
@@ -43,7 +44,7 @@
 
         <a
             href="dashboard.html"
-            class="block px-4 py-3 rounded bg-gold text-dark font-semibold">
+            class="block px-4 py-3 rounded hover:bg-gray-800">
 
             Dashboard
 
@@ -51,7 +52,7 @@
 
         <a
             href="consultations.html"
-            class="block px-4 py-3 rounded hover:bg-gray-800">
+            class="block px-4 py-3 rounded bg-gold text-dark font-semibold">
 
             My Consultations
 
@@ -87,7 +88,7 @@
 
         <button
             id="logoutBtn"
-            class="w-full text-left text-red-400 hover:text-red-300">
+            class="text-red-400 hover:text-red-300">
 
             Logout
 
@@ -99,85 +100,17 @@
 
 <main class="flex-1">
 
-    <header class="bg-white border-b px-8 py-5 flex justify-between items-center">
+    <header class="bg-white border-b px-8 py-5">
 
-        <div>
-
-            <h2 class="text-2xl font-bold">
-                Welcome Back 👋
-            </h2>
-
-            <p class="text-gray-500">
-                Manage your consultations and designs
-            </p>
-
-        </div>
+        <h2 class="text-2xl font-bold">
+            My Consultations
+        </h2>
 
     </header>
 
     <div class="p-8">
 
-        <div class="grid md:grid-cols-3 gap-6 mb-8">
-
-            <div class="bg-white rounded-xl shadow p-6">
-
-                <p class="text-gray-500">
-                    Consultations
-                </p>
-
-                <h3
-                    id="consultationCount"
-                    class="text-4xl font-bold mt-2">
-
-                    0
-
-                </h3>
-
-            </div>
-
-            <div class="bg-white rounded-xl shadow p-6">
-
-                <p class="text-gray-500">
-                    Saved Designs
-                </p>
-
-                <h3
-                    id="savedDesignCount"
-                    class="text-4xl font-bold mt-2">
-
-                    0
-
-                </h3>
-
-            </div>
-
-            <div class="bg-white rounded-xl shadow p-6">
-
-                <p class="text-gray-500">
-                    Favorite Blogs
-                </p>
-
-                <h3
-                    id="blogCount"
-                    class="text-4xl font-bold mt-2">
-
-                    0
-
-                </h3>
-
-            </div>
-
-        </div>
-
-        <div class="bg-white rounded-xl shadow">
-
-            <div class="p-6 border-b">
-
-                <h3 class="text-xl font-semibold">
-                    Recent Consultations
-                </h3>
-
-            </div>
+        <div class="bg-white rounded-xl shadow overflow-hidden">
 
             <table class="w-full">
 
@@ -190,18 +123,27 @@
                         </th>
 
                         <th class="text-left p-4">
-                            Date
+                            Budget
                         </th>
 
                         <th class="text-left p-4">
-                            Budget
+                            Preferred Date
+                        </th>
+
+                        <th class="text-left p-4">
+                            Status
+                        </th>
+
+                        <th class="text-left p-4">
+                            Message
                         </th>
 
                     </tr>
 
                 </thead>
 
-                <tbody id="consultationTable">
+                <tbody
+                    id="consultationTable">
 
                 </tbody>
 
@@ -212,7 +154,6 @@
     </div>
 
 </main>
-
 
 </div>
 
@@ -248,65 +189,69 @@ document
 const API_URL =
 "http://127.0.0.1:8000";
 
-async function loadDashboard(){
+async function loadConsultations(){
 
     try{
 
-        const consultationsResponse =
+        const response =
         await fetch(
             `${API_URL}/consultations`
         );
 
         const consultations =
-        await consultationsResponse.json();
-
-        document
-        .getElementById(
-            "consultationCount"
-        )
-        .innerText =
-        consultations.length;
-
-        document
-        .getElementById(
-            "savedDesignCount"
-        )
-        .innerText =
-        "0";
-
-        document
-        .getElementById(
-            "blogCount"
-        )
-        .innerText =
-        "0";
+        await response.json();
 
         const table =
         document.getElementById(
             "consultationTable"
         );
 
-        consultations
-        .slice(0,5)
-        .forEach(item => {
+        table.innerHTML = "";
+
+        consultations.forEach(item => {
 
             table.innerHTML += `
+
             <tr class="border-t">
 
                 <td class="p-4">
+
                     ${item.project_type}
+
                 </td>
 
                 <td class="p-4">
-                    ${item.preferred_date}
-                </td>
 
-                <td class="p-4">
                     ${item.budget}
+
+                </td>
+
+                <td class="p-4">
+
+                    ${item.preferred_date}
+
+                </td>
+
+                <td class="p-4">
+
+                    <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs">
+
+                        Pending
+
+                    </span>
+
+                </td>
+
+                <td class="p-4">
+
+                    ${item.message.slice(0,50)}...
+
                 </td>
 
             </tr>
+
             `;
+
         });
 
     }
@@ -321,7 +266,7 @@ async function loadDashboard(){
 
 }
 
-loadDashboard();
+loadConsultations();
 
 </script>
 
