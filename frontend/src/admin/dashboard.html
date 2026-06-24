@@ -1,3 +1,9 @@
+<script>
+if(!localStorage.getItem("token")){
+    window.location.href =
+    "../auth/login.html";
+}
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +34,6 @@
             <a href="designs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Designs</a>
             <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
             <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Users</a>
-            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Blogs</a>
             <a href="settings.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Settings</a>
         </nav>
         <div class="p-4 border-t border-gray-800">
@@ -48,24 +53,57 @@
 
         <div class="p-8 overflow-y-auto flex-1">
             
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" id="statsContainer">
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                    <h3 class="text-sm text-gray-500 mb-1">Total Users</h3>
-                    <p class="text-3xl font-bold">1,248</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                    <h3 class="text-sm text-gray-500 mb-1">Total Designs</h3>
-                    <p class="text-3xl font-bold">45</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                    <h3 class="text-sm text-gray-500 mb-1">Pending Orders</h3>
-                    <p class="text-3xl font-bold">12</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                    <h3 class="text-sm text-gray-500 mb-1">Total Revenue</h3>
-                    <p class="text-3xl font-bold text-gold">$142,000</p>
-                </div>
-            </div>
+           <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" id="statsContainer">
+
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-sm text-gray-500 mb-1">
+            Registered Users
+        </h3>
+
+        <p
+            id="userCount"
+            class="text-3xl font-bold">
+            0
+        </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-sm text-gray-500 mb-1">
+            Total Projects
+        </h3>
+
+        <p
+            id="projectCount"
+            class="text-3xl font-bold">
+            0
+        </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-sm text-gray-500 mb-1">
+            Consultation Requests
+        </h3>
+
+        <p
+            id="consultationCount"
+            class="text-3xl font-bold">
+            0
+        </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-sm text-gray-500 mb-1">
+            Contact Messages
+        </h3>
+
+        <p
+            id="contactCount"
+            class="text-3xl font-bold text-gold">
+            0
+        </p>
+    </div>
+
+</div>
 
             <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
@@ -96,6 +134,19 @@
 
         </div>
     </main>
+<script>
 
-    <script src="../admin/js/admin.js"></script>
+document
+.getElementById("logoutBtn")
+.addEventListener("click", () => {
+
+    localStorage.removeItem("token");
+
+    window.location.href =
+        "../auth/login.html";
+
+});
+
+</script>
+    <script src="./js/admin.js"></script>
 </body>

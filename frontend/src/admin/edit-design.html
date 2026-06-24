@@ -30,7 +30,6 @@
             <a href="designs.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">Designs</a>
             <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
             <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Users</a>
-            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Blogs</a>
             <a href="settings.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Settings</a>
         </nav>
         <div class="p-4 border-t border-gray-800">
@@ -137,16 +136,85 @@
     <script src="../js/admin.js"></script>
     <script>
         // Simulate fetching design ID from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const designId = urlParams.get('id') || '1'; // Default to 1 if no param is passed
-        
-        document.getElementById('displayDesignId').innerText = `ID: ${designId}`;
-        
-        /* TODO: Connect to GET /designs/{id}
-           In a real scenario, you would fetch the design data here using the designId 
-           and populate the form inputs dynamically before showing the page.
-        */
+      const API_URL =
+"http://127.0.0.1:8000";
 
+const urlParams =
+new URLSearchParams(
+    window.location.search
+);
+
+const designId =
+urlParams.get("id");
+console.log(window.location.href);
+console.log(designId);
+
+document.getElementById(
+    "displayDesignId"
+).innerText =
+`ID: ${designId}`;
+
+// PASTE HERE ↓↓↓
+
+async function loadProject(){
+
+    try{
+
+        const response =
+        await fetch(
+            `${API_URL}/project/${designId}`
+        );
+
+        const project =
+        await response.json();
+
+        document.getElementById(
+            "title"
+        ).value =
+        project.title;
+
+        document.getElementById(
+            "category"
+        ).value =
+        project.category;
+
+        document.getElementById(
+            "description"
+        ).value =
+        project.description;
+
+        const imageContainer =
+        document.getElementById(
+            "currentImagesContainer"
+        );
+
+        imageContainer.innerHTML = "";
+
+        project.images.forEach(
+            image => {
+
+                imageContainer.innerHTML += `
+                <div class="w-32 h-32 rounded border overflow-hidden">
+                    <img
+                        src="${image}"
+                        class="w-full h-full object-cover"
+                    >
+                </div>
+                `;
+            }
+        );
+
+    }catch(error){
+
+        console.log(error);
+
+        alert(
+            "Failed to load project"
+        );
+    }
+}
+
+loadProject();
         // Handle New Image Preview
         const imageInput = document.getElementById('images');
         const previewContainer = document.getElementById('imagePreviewContainer');
@@ -186,32 +254,88 @@
                 }
             });
         });
+        document
+.getElementById(
+    "editDesignForm"
+)
+.addEventListener(
+"submit",
+async (e)=>{
 
-        // Form Submission Mock for PUT /designs/{id}
-        document.getElementById('editDesignForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerText = "Saving...";
-            submitBtn.disabled = true;
+    e.preventDefault();
 
-            const formData = new FormData(this);
-            
-            /* TODO: Connect to FastAPI backend
-               fetch(`http://localhost:8000/designs/${designId}`, {
-                   method: 'PUT',
-                   headers: {
-                       'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                   },
-                   body: formData
-               }).then(...)
-            */
+    const submitBtn =
+    document.getElementById(
+        "submitBtn"
+    );
 
-            // Simulation
-            setTimeout(() => {
-                alert("Design updated successfully! (Mock)");
-                window.location.href = "designs.html";
-            }, 1000);
-        });
+    submitBtn.innerText =
+    "Saving...";
+
+    const updatedProject = {
+
+        title:
+        document.getElementById(
+            "title"
+        ).value,
+
+        category:
+        document.getElementById(
+            "category"
+        ).value,
+
+        description:
+        document.getElementById(
+            "description"
+        ).value,
+
+        location:
+        "Not Specified",
+
+        images:[]
+    };
+
+    try{
+
+        const response =
+        await fetch(
+            `${API_URL}/project/${designId}`,
+            {
+                method:"PUT",
+
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+
+                body:JSON.stringify(
+                    updatedProject
+                )
+            }
+        );
+
+        const data =
+        await response.json();
+
+        alert(
+            data.message
+        );
+
+        window.location.href =
+        "designs.html";
+
+    }catch(error){
+
+        console.log(error);
+
+        alert(
+            "Update failed"
+        );
+    }
+
+    submitBtn.innerText =
+    "Save Changes";
+});
     </script>
 </body>
 </html>

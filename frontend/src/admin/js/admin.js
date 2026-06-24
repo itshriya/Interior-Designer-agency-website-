@@ -1,23 +1,43 @@
-// js/admin.js
+const API_URL = "http://127.0.0.1:8000";
 
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Updated to match the "token" key from login.html
-    const token = localStorage.getItem("token"); 
-    
-    if (!token) {
-        // If no token exists, kick them back to login
-        window.location.href = "../auth/login.html";
-        return;
+async function loadDashboard() {
+
+    try {
+
+        const projects =
+            await fetch(`${API_URL}/projects`)
+            .then(res => res.json());
+
+        const contacts =
+            await fetch(`${API_URL}/contacts`)
+            .then(res => res.json());
+
+        const consultations =
+            await fetch(`${API_URL}/consultations`)
+            .then(res => res.json());
+
+        document.getElementById(
+            "projectCount"
+        ).innerText = projects.length;
+
+        document.getElementById(
+            "consultationCount"
+        ).innerText = consultations.length;
+
+        document.getElementById(
+            "contactCount"
+        ).innerText = contacts.length;
+
     }
-    
-    // Future: Call GET /auth/me here to verify the token is valid and role === 'admin'
-});
+    catch(error){
 
-// Logout handler
-document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    // 2. Updated to remove the correct "token" key
-    localStorage.removeItem("token"); 
-    
-    // Redirect to login page
-    window.location.href = "../auth/login.html";
-});
+        console.error(
+            "Dashboard Error",
+            error
+        );
+
+    }
+
+}
+
+loadDashboard();

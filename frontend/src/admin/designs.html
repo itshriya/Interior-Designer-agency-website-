@@ -28,9 +28,8 @@
         <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
             <a href="dashboard.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Dashboard</a>
             <a href="designs.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">Designs</a>
-            <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
+           <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
             <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Users</a>
-            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Blogs</a>
             <a href="settings.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Settings</a>
         </nav>
         <div class="p-4 border-t border-gray-800">
@@ -79,47 +78,13 @@
                                 <th class="px-6 py-4 border-b w-24">Image</th>
                                 <th class="px-6 py-4 border-b">Design Title</th>
                                 <th class="px-6 py-4 border-b">Category</th>
-                                <th class="px-6 py-4 border-b">Price</th>
+                                <th class="px-6 py-4 border-b">Location</th>
                                 <th class="px-6 py-4 border-b text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="designsTableBody">
-                            <tr class="hover:bg-gray-50 border-b border-gray-50 transition">
-                                <td class="px-6 py-3">
-                                    <div class="w-16 h-12 bg-gray-200 rounded overflow-hidden">
-                                        <img src="https://via.placeholder.com/150x100?text=Design" alt="Modern Living Room" class="w-full h-full object-cover">
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <p class="font-medium text-dark">Modern Minimalist Living Room</p>
-                                    <p class="text-xs text-gray-500 truncate w-48">A sleek, open-concept living area with dark accents...</p>
-                                </td>
-                                <td class="px-6 py-4 text-sm">Living Room</td>
-                                <td class="px-6 py-4 text-sm font-semibold text-gold">$50,000</td>
-                                <td class="px-6 py-4 text-right text-sm font-medium">
-                                    <a href="edit-design.html?id=1" class="text-blue-600 hover:text-blue-800 mr-3">Edit</a>
-                                    <button class="text-red-500 hover:text-red-700 delete-btn" data-id="1">Delete</button>
-                                </td>
-                            </tr>
+                     <tbody id="designsTableBody">
 
-                            <tr class="hover:bg-gray-50 border-b border-gray-50 transition">
-                                <td class="px-6 py-3">
-                                    <div class="w-16 h-12 bg-gray-200 rounded overflow-hidden">
-                                        <img src="https://via.placeholder.com/150x100?text=Design" alt="Luxury Bedroom" class="w-full h-full object-cover">
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <p class="font-medium text-dark">Royal Master Bedroom</p>
-                                    <p class="text-xs text-gray-500 truncate w-48">Gold and black accents with velvet textures...</p>
-                                </td>
-                                <td class="px-6 py-4 text-sm">Bedroom</td>
-                                <td class="px-6 py-4 text-sm font-semibold text-gold">$35,000</td>
-                                <td class="px-6 py-4 text-right text-sm font-medium">
-                                    <a href="edit-design.html?id=2" class="text-blue-600 hover:text-blue-800 mr-3">Edit</a>
-                                    <button class="text-red-500 hover:text-red-700 delete-btn" data-id="2">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
+</tbody>
                     </table>
                 </div>
                 
@@ -136,20 +101,6 @@
 
         </div>
     </main>
-
-    <script src="../js/admin.js"></script>
-    <script>
-        // Temporary Vanilla JS for Delete confirmation UI
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                if(confirm('Are you sure you want to delete this design? This action cannot be undone.')) {
-                    // Later: call DELETE /designs/{id}
-                    console.log('Deleting design ID:', id);
-                    this.closest('tr').remove();
-                }
-            });
-        });
-    </script>
+    <script src="./js/designs.js"></script>
 </body>
 </html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+<h1>Login Successful 🎉</h1>
+
+<p>Welcome to Livora Admin Dashboard</p>
+
+<button id="logoutBtn">
+    Logout
+</button>
+
+<script>
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click", () => {
+
+    localStorage.removeItem("token");
+
+    window.location.href =
+        "../auth/login.html";
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,11 +1,288 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Book Consultation | Livora</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        body{
+            font-family:'Plus Jakarta Sans',sans-serif;
+            background:#0d0d0d;
+            color:white;
+        }
+
+        .font-serif{
+            font-family:'Playfair Display',serif;
+        }
+
+        .gold-text{
+            color:#c59d5f;
+        }
+
+        .gold-bg{
+            background:#c59d5f;
+        }
+
+        .form-input{
+            width:100%;
+            background:transparent;
+            border:none;
+            border-bottom:1px solid rgba(255,255,255,0.15);
+            padding:14px 0;
+            color:white;
+            transition:.3s;
+        }
+
+        .form-input:focus{
+            outline:none;
+            border-color:#c59d5f;
+        }
+
+        .form-input option{
+            background:#111;
+        }
+
+    </style>
+
 </head>
+
 <body>
-    
+
+    <nav class="w-full py-6 px-6 lg:px-12 border-b border-white/10 flex justify-between items-center">
+
+        <a href="index.html"
+           class="flex items-center gap-3">
+
+            <div class="w-10 h-10 rounded-full border border-[#c59d5f] flex items-center justify-center text-[#c59d5f] font-serif">
+                L
+            </div>
+
+            <span class="uppercase tracking-[0.2em] text-sm">
+                Return Home
+            </span>
+
+        </a>
+
+    </nav>
+
+    <section class="py-20 lg:py-28">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+            <div class="grid lg:grid-cols-2 gap-20 items-start">
+
+                <!-- LEFT -->
+
+                <div>
+
+                    <span class="gold-text uppercase tracking-[0.3em] text-xs font-semibold">
+                        Design Consultation
+                    </span>
+
+                    <h1 class="font-serif text-5xl md:text-6xl mt-6 mb-8">
+                        Begin Your
+                        <br>
+                        Design Journey
+                    </h1>
+
+                    <p class="text-gray-400 leading-relaxed max-w-lg">
+                        Schedule a personalized consultation with our design team.
+                        We'll discuss your vision, space requirements, budget,
+                        and timeline to create a tailored interior experience.
+                    </p>
+
+                    <div class="mt-12 space-y-8">
+
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">
+                                Consultation Includes
+                            </h4>
+
+                            <ul class="space-y-3 text-gray-300">
+                                <li>✓ Design Vision Discussion</li>
+                                <li>✓ Space Planning Review</li>
+                                <li>✓ Budget Planning</li>
+                                <li>✓ Material & Style Suggestions</li>
+                                <li>✓ Project Timeline Estimation</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- RIGHT -->
+
+                <div class="bg-[#141414] border border-white/5 rounded-2xl p-10 shadow-2xl">
+
+                    <form id="consultationForm" class="space-y-8">
+
+                        <div class="grid md:grid-cols-2 gap-8">
+
+                            <div>
+                                <label class="text-xs uppercase tracking-[0.2em] text-gray-400">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    class="form-input"
+                                    required>
+                            </div>
+
+                            <div>
+                                <label class="text-xs uppercase tracking-[0.2em] text-gray-400">
+                                    Phone
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="phone"
+                                    class="form-input"
+                                    required>
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <label class="text-xs uppercase tracking-[0.2em] text-gray-400">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                class="form-input"
+                                required>
+
+                        </div>
+
+                        <div>
+
+                            <label class="text-xs uppercase tracking-[0.2em] text-gray-400">
+                                Project Type
+                            </label>
+
+                            <select id="projectType"
+                                    class="form-input">
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option>
+                                    Residential
+                                </option>
+
+                                <option>
+                                    Commercial
+                                </option>
+
+                                <option>
+                                    Renovation
+                                </option>
+
+                                <option>
+                                    Luxury Villa
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            <label class="text-xs uppercase tracking-[0.2em] text-gray-400">
+                                Budget Range
+                            </label>
+
+                            <select id="budget"
+                                    class="form-input">
+
+                                <option>
+                                    Under ₹5 Lakhs
+                                </option>
+
+                                <option>
+                                    ₹5 - ₹15 Lakhs
+                                </option>
+
+                                <option>
+                                    ₹15 - ₹30 Lakhs
+                                </option>
+
+                                <option>
+                                    ₹30 Lakhs+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            <label class="text-xs uppercase tracking-[0.2em] text-gray-400">
+                                Preferred Consultation Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="consultationDate"
+                                class="form-input">
+
+                        </div>
+
+                        <div>
+
+                            <label class="text-xs uppercase tracking-[0.2em] text-gray-400">
+                                Project Details
+                            </label>
+
+                            <textarea
+                                id="details"
+                                rows="5"
+                                class="form-input resize-none"
+                                placeholder="Tell us about your project..."
+                                required></textarea>
+
+                        </div>
+
+                        <button
+                            id="submitBtn"
+                            type="submit"
+                            class="gold-bg w-full py-4 uppercase tracking-[0.2em] text-sm rounded transition duration-300 hover:bg-[#a57d47] hover:-translate-y-1">
+
+                            Book Consultation
+
+                        </button>
+
+                        <p id="formStatus"
+                           class="text-center text-sm"></p>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="./js/config.js"></script>
+    <script src="./js/consultation.js"></script>
+
 </body>
+
 </html>
+```

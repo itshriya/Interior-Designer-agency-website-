@@ -63,35 +63,82 @@
                 </div>
 
                 <div class="bg-[#141414] p-10 rounded-2xl border border-white/5 shadow-2xl">
-                    <form class="space-y-8">
-                        <div class="grid grid-cols-2 gap-8">
-                            <div>
-                                <label class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 block">First Name</label>
-                                <input type="text" class="form-input" placeholder="Jane">
-                            </div>
-                            <div>
-                                <label class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 block">Last Name</label>
-                                <input type="text" class="form-input" placeholder="Doe">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 block">Email Address</label>
-                            <input type="email" class="form-input" placeholder="jane@example.com">
-                        </div>
-                        <div>
-                            <label class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 block">Project Details</label>
-                            <textarea class="form-input resize-none h-24" placeholder="Tell us about your space..."></textarea>
-                        </div>
-                        
-                        <button type="button" class="gold-bg text-white w-full py-4 text-xs font-bold tracking-[0.2em] uppercase rounded hover:bg-[#a37a44] transition-all duration-300 transform hover:-translate-y-1 active:scale-95 active:translate-y-0 mt-4">
-                            Send Message
-                        </button>
-                    </form>
+                  <form id="contactForm" class="space-y-8">
+
+    <div class="grid grid-cols-2 gap-8">
+
+        <div>
+            <label class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 block">
+                First Name
+            </label>
+            <input
+                type="text"
+                id="firstName"
+                class="form-input"
+                placeholder="Jane"
+                required
+            >
+        </div>
+
+        <div>
+            <label class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 block">
+                Last Name
+            </label>
+            <input
+                type="text"
+                id="lastName"
+                class="form-input"
+                placeholder="Doe"
+                required
+            >
+        </div>
+
+    </div>
+
+    <div>
+        <label class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 block">
+            Email Address
+        </label>
+        <input
+            type="email"
+            id="email"
+            class="form-input"
+            placeholder="jane@example.com"
+            required
+        >
+    </div>
+
+    <div>
+        <label class="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-1 block">
+            Project Details
+        </label>
+        <textarea
+            id="message"
+            class="form-input resize-none h-24"
+            placeholder="Tell us about your space..."
+            required
+        ></textarea>
+    </div>
+
+    <button
+        id="submitBtn"
+        type="submit"
+        class="gold-bg text-white w-full py-4 text-xs font-bold tracking-[0.2em] uppercase rounded hover:bg-[#a37a44] transition-all duration-300 transform hover:-translate-y-1 active:scale-95 active:translate-y-0 mt-4"
+    >
+        Send Message
+    </button>
+
+    <p id="formStatus" class="text-center text-sm mt-4"></p>
+
+</form>
                 </div>
 
             </div>
         </div>
     </section>
-
+   
+   <script src="./js/config.js"></script>
+   <script src="./js/contact.js"></script>
+  
 </body>
 </html>

@@ -32,7 +32,6 @@
             <a href="designs.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">Designs</a>
             <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
             <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Users</a>
-            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Blogs</a>
             <a href="settings.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Settings</a>
         </nav>
         <div class="p-4 border-t border-gray-800">
@@ -73,24 +72,62 @@
                         <input type="text" id="title" name="title" required placeholder="e.g., Modern Minimalist Living Room" class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold">
                     </div>
 
-                    <!-- Category & Price -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                            <select id="category" name="category" required class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold bg-white">
-                                <option value="" disabled selected>Select a category</option>
-                                <option value="Living Room">Living Room</option>
-                                <option value="Bedroom">Bedroom</option>
-                                <option value="Kitchen">Kitchen</option>
-                                <option value="Bathroom">Bathroom</option>
-                                <option value="Office">Office</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
-                            <input type="number" id="price" name="price" required min="0" step="100" placeholder="50000" class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold">
-                        </div>
-                    </div>
+                    <!-- Category -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+    <div>
+        <label
+            for="category"
+            class="block text-sm font-medium text-gray-700 mb-1">
+            Category
+        </label>
+
+        <select
+            id="category"
+            required
+            class="w-full p-2.5 border border-gray-300 rounded">
+
+            <option value="">Select Category</option>
+
+            <option value="Living Room">
+                Living Room
+            </option>
+
+            <option value="Bedroom">
+                Bedroom
+            </option>
+
+            <option value="Kitchen">
+                Kitchen
+            </option>
+
+            <option value="Bathroom">
+                Bathroom
+            </option>
+
+            <option value="Office">
+                Office
+            </option>
+
+        </select>
+    </div>
+
+    <div>
+        <label
+            for="location"
+            class="block text-sm font-medium text-gray-700 mb-1">
+            Location
+        </label>
+
+        <input
+            type="text"
+            id="location"
+            required
+            placeholder="Mumbai, India"
+            class="w-full p-2.5 border border-gray-300 rounded">
+    </div>
+
+</div>
 
                     <!-- Description -->
                     <div class="mb-6">
@@ -128,7 +165,7 @@
         </div>
     </main>
 
-    <script src="../js/admin.js"></script>
+    <script src="./js/admin.js"></script>
     <script>
         // Handle Image Preview
         const imageInput = document.getElementById('images');
@@ -161,32 +198,138 @@
         });
 
         // Form Submission Mock for POST /designs API connection
-        document.getElementById('addDesignForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerText = "Publishing...";
-            submitBtn.disabled = true;
+        document
+.getElementById("addDesignForm")
+.addEventListener(
+"submit",
+async function(e){
 
-            // Form Data collection preparing for FormData (to handle files)
-            const formData = new FormData(this);
-            
-            /* 
-               TODO: Connect to FastAPI backend
-               fetch('http://localhost:8000/designs', {
-                   method: 'POST',
-                   headers: {
-                       'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-                   },
-                   body: formData
-               }).then(...)
-            */
+    e.preventDefault();
 
-            // Simulation
-            setTimeout(() => {
-                alert("Design published successfully! (Mock)");
-                window.location.href = "designs.html";
-            }, 1000);
-        });
+    const submitBtn =
+    document.getElementById(
+        "submitBtn"
+    );
+
+    submitBtn.disabled = true;
+
+    submitBtn.innerText =
+    "Publishing...";
+
+    try{
+
+        const imageInput =
+        document.getElementById(
+            "images"
+        );
+
+        const selectedFiles =
+        imageInput.files;
+
+        const imageUrls = [];
+
+        // Upload every image to ImageKit
+
+        for(
+            let file of selectedFiles
+        ){
+
+            const formData =
+            new FormData();
+
+            formData.append(
+                "file",
+                file
+            );
+
+            const uploadResponse =
+            await fetch(
+                "http://127.0.0.1:8000/upload",
+                {
+                    method:"POST",
+                    body:formData
+                }
+            );
+
+            const uploadData =
+            await uploadResponse.json();
+
+            imageUrls.push(
+                uploadData.image_url
+            );
+
+        }
+
+        // Create Project
+
+        const projectResponse =
+        await fetch(
+            "http://127.0.0.1:8000/project",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+
+                body:JSON.stringify({
+
+                    title:
+                    document.getElementById(
+                        "title"
+                    ).value,
+
+                    category:
+                    document.getElementById(
+                        "category"
+                    ).value,
+
+                    location:
+                    document.getElementById(
+                        "location"
+                    ).value,
+
+                    description:
+                    document.getElementById(
+                        "description"
+                    ).value,
+
+                    images:
+                    imageUrls
+
+                })
+            }
+        );
+
+        const projectData =
+        await projectResponse.json();
+
+        alert(
+            "Project Created Successfully"
+        );
+
+        window.location.href =
+        "designs.html";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Failed to create project"
+        );
+
+    }
+
+    submitBtn.disabled = false;
+
+    submitBtn.innerText =
+    "Save & Publish";
+
+});
     </script>
 </body>
 </html>
