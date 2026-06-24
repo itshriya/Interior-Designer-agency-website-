@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livora Admin - Blogs</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    gold: '#C59D5F',
+                    dark: '#0D0D0D',
+                    light: '#F8F6F2'
+                }
+            }
+        }
+    }
+</script>
+
+
+</head>
+
+<body class="bg-light font-sans text-dark flex h-screen overflow-hidden">
+
+<aside class="w-64 bg-dark text-white flex flex-col">
+    <div class="p-6 text-center text-2xl font-bold text-gold border-b border-gray-800">
+        LIVORA
+    </div>
+
+    <nav class="flex-1 p-4 space-y-2">
+        <a href="dashboard.html" class="block px-4 py-2 rounded hover:bg-gray-800">
+            Dashboard
+        </a>
+
+        <a href="designs.html" class="block px-4 py-2 rounded hover:bg-gray-800">
+            Designs
+        </a>
+
+        <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800">
+            Orders
+        </a>
+
+        <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800">
+            Users
+        </a>
+
+        <a href="blogs.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">
+            Blogs
+        </a>
+
+        <a href="settings.html" class="block px-4 py-2 rounded hover:bg-gray-800">
+            Settings
+        </a>
+    </nav>
+
+    <div class="p-4 border-t border-gray-800">
+        <button
+            id="logoutBtn"
+            class="w-full text-left px-4 py-2 text-red-400 hover:text-red-300">
+            Logout
+        </button>
+    </div>
+</aside>
+
+<main class="flex-1 overflow-y-auto">
+
+    <header class="bg-white border-b shadow-sm px-8 py-5 flex justify-between items-center">
+
+        <h1 class="text-2xl font-bold">
+            Manage Blogs
+        </h1>
+
+        <a
+            href="add-blog.html"
+            class="bg-dark text-white px-5 py-2 rounded-lg hover:bg-gold transition">
+
+            Add Blog
+
+        </a>
+
+    </header>
+
+    <div class="p-8">
+
+        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+
+            <table class="w-full">
+
+                <thead>
+
+                    <tr class="bg-gray-50 border-b">
+
+                        <th class="text-left p-4">
+                            Image
+                        </th>
+
+                        <th class="text-left p-4">
+                            Title
+                        </th>
+
+                        <th class="text-left p-4">
+                            Category
+                        </th>
+
+                        <th class="text-left p-4">
+                            Author
+                        </th>
+
+                        <th class="text-left p-4">
+                            Status
+                        </th>
+
+                        <th class="text-left p-4">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="blogsTable">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+<script>
+
+if(!localStorage.getItem("token")){
+
+    window.location.href =
+    "../auth/login.html";
+
+}
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+    "click",
+    () => {
+
+        localStorage.removeItem(
+            "token"
+        );
+
+        localStorage.removeItem(
+            "role"
+        );
+
+        window.location.href =
+        "../auth/login.html";
+
+    }
+);
+
+const API_URL =
+"http://127.0.0.1:8000";
+
+async function loadBlogs(){
+
+    try{
+
+        const response =
+        await fetch(
+            `${API_URL}/blogs`
+        );
+
+        const blogs =
+        await response.json();
+
+        const table =
+        document.getElementById(
+            "blogsTable"
+        );
+
+        table.innerHTML = "";
+
+        blogs.forEach(blog => {
+
+            table.innerHTML += `
+
+            <tr class="border-b hover:bg-gray-50">
+
+                <td class="p-4">
+
+                    <img
+                        src="${blog.image_url}"
+                        class="w-20 h-16 object-cover rounded">
+
+                </td>
+
+                <td class="p-4 font-medium">
+
+                    ${blog.title}
+
+                </td>
+
+                <td class="p-4">
+
+                    ${blog.category}
+
+                </td>
+
+                <td class="p-4">
+
+                    ${blog.author}
+
+                </td>
+
+                <td class="p-4">
+
+                    <span
+                    class="px-3 py-1 rounded-full text-xs
+                    ${
+                        blog.status === "published"
+                        ?
+                        "bg-green-100 text-green-700"
+                        :
+                        "bg-yellow-100 text-yellow-700"
+                    }">
+
+                    ${blog.status}
+
+                    </span>
+
+                </td>
+
+                <td class="p-4">
+
+                    <a
+                        href="edit-blog.html?id=${blog._id}"
+                        class="text-blue-600 hover:underline mr-4">
+
+                        Edit
+
+                    </a>
+
+                    <button
+                        onclick="deleteBlog('${blog._id}')"
+                        class="text-red-600 hover:underline">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `;
+        });
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+async function deleteBlog(
+    id
+){
+
+    const confirmed =
+    confirm(
+        "Delete this blog?"
+    );
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+    try{
+
+        await fetch(
+            `${API_URL}/blog/${id}`,
+            {
+                method:"DELETE"
+            }
+        );
+
+        loadBlogs();
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+loadBlogs();
+
+</script>
+
+</body>
+</html>

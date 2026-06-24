@@ -202,54 +202,175 @@
         </div>
     </div>
 
-    <script src="../js/admin.js"></script>
+    
     <script>
-        // Temporary Vanilla JS for the Modal UI
-        const modal = document.getElementById('userModal');
-        const viewBtns = document.querySelectorAll('.view-btn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const cancelModalBtn = document.getElementById('cancelModalBtn');
+if(!localStorage.getItem("token")){
 
-        viewBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const userName = this.getAttribute('data-name');
-                const initials = userName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                
-                // In a real application, you would fetch user data via GET /users/{id}
-                document.getElementById('modalUserName').innerText = userName;
-                document.getElementById('modalUserInitials').innerText = initials;
-                
-                // For demonstration, mock dynamic info based on the role
-                if(userName === "Admin System") {
-                    document.getElementById('modalUserEmail').innerText = "admin@livora.com";
-                    document.getElementById('modalUserRole').innerText = "Admin";
-                    document.getElementById('modalUserRole').className = "inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-gold bg-opacity-20 text-yellow-800 border border-gold";
-                    document.getElementById('modalTotalOrders').innerText = "N/A";
-                    document.getElementById('modalTotalSpent').innerText = "$0";
-                } else {
-                    document.getElementById('modalUserRole').innerText = "User";
-                    document.getElementById('modalUserRole').className = "inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600 border border-gray-200";
-                    // Just keeping the default mock stats for users
-                }
+    window.location.href =
+    "../auth/login.html";
 
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            });
-        });
+}
 
-        const closeModal = () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        };
+document
+.getElementById("logoutBtn")
+.addEventListener(
+    "click",
+    () => {
 
-        closeModalBtn.addEventListener('click', closeModal);
-        cancelModalBtn.addEventListener('click', closeModal);
+        localStorage.removeItem(
+            "token"
+        );
 
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
+        localStorage.removeItem(
+            "role"
+        );
+
+        window.location.href =
+        "../auth/login.html";
+
+    }
+);
+
+// Existing Modal Logic
+const modal =
+document.getElementById(
+    'userModal'
+);
+
+const viewBtns =
+document.querySelectorAll(
+    '.view-btn'
+);
+
+const closeModalBtn =
+document.getElementById(
+    'closeModalBtn'
+);
+
+const cancelModalBtn =
+document.getElementById(
+    'cancelModalBtn'
+);
+
+viewBtns.forEach(btn => {
+
+    btn.addEventListener(
+        'click',
+        function(){
+
+            const userName =
+            this.getAttribute(
+                'data-name'
+            );
+
+            const initials =
+            userName
+            .split(' ')
+            .map(
+                n => n[0]
+            )
+            .join('')
+            .substring(
+                0,
+                2
+            )
+            .toUpperCase();
+
+            document
+            .getElementById(
+                'modalUserName'
+            )
+            .innerText =
+            userName;
+
+            document
+            .getElementById(
+                'modalUserInitials'
+            )
+            .innerText =
+            initials;
+
+            if(
+                userName ===
+                "Admin System"
+            ){
+
+                document
+                .getElementById(
+                    'modalUserEmail'
+                )
+                .innerText =
+                "admin@livora.com";
+
+                document
+                .getElementById(
+                    'modalUserRole'
+                )
+                .innerText =
+                "Admin";
+
             }
-        });
-    </script>
+
+            else{
+
+                document
+                .getElementById(
+                    'modalUserRole'
+                )
+                .innerText =
+                "User";
+
+            }
+
+            modal.classList.remove(
+                'hidden'
+            );
+
+            modal.classList.add(
+                'flex'
+            );
+
+        }
+    );
+
+});
+
+function closeModal(){
+
+    modal.classList.add(
+        'hidden'
+    );
+
+    modal.classList.remove(
+        'flex'
+    );
+
+}
+
+closeModalBtn.addEventListener(
+    'click',
+    closeModal
+);
+
+cancelModalBtn.addEventListener(
+    'click',
+    closeModal
+);
+
+modal.addEventListener(
+    'click',
+    (e) => {
+
+        if(
+            e.target === modal
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+</script>
 </body>
 </html>

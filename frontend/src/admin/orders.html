@@ -135,8 +135,34 @@
         </div>
     </div>
 
-    <script src="../js/admin.js"></script>
-   <script>
+  <script>
+if(!localStorage.getItem("token")){
+
+    window.location.href =
+    "../auth/login.html";
+
+}
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+    "click",
+    () => {
+
+        localStorage.removeItem(
+            "token"
+        );
+
+        localStorage.removeItem(
+            "role"
+        );
+
+        window.location.href =
+        "../auth/login.html";
+
+    }
+);
+
 const API_URL = "http://127.0.0.1:8000";
 
 async function loadConsultations(){
@@ -190,15 +216,20 @@ async function loadConsultations(){
                 </td>
 
                 <td class="px-6 py-4">
-                    <span
-                    class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs">
+                    <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs">
                         New Lead
                     </span>
                 </td>
 
                 <td class="px-6 py-4 text-right">
                     <button
-                        onclick="showDetails('${item.name}','${item.email}','${item.phone}','${item.budget}','${item.message}')"
+                        onclick="showDetails(
+                            '${item.name}',
+                            '${item.email}',
+                            '${item.phone}',
+                            '${item.budget}',
+                            '${item.message}'
+                        )"
                         class="text-blue-600 hover:text-blue-800">
                         View
                     </button>
@@ -227,8 +258,7 @@ function showDetails(
 ){
 
     alert(
-`
-Name: ${name}
+`Name: ${name}
 
 Email: ${email}
 
@@ -237,8 +267,7 @@ Phone: ${phone}
 Budget: ${budget}
 
 Message:
-${message}
-`
+${message}`
     );
 
 }
