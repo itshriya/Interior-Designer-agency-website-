@@ -32,11 +32,16 @@ async def signup(user: UserSignup):
         user.password
     )
 
-    await db.users.insert_one(user_data)
+    user_data["role"] = "user"
+
+    await db.users.insert_one(
+        user_data
+    )
 
     return {
         "message": "User created successfully"
     }
+
 
 @router.post("/login")
 async def login(user: UserLogin):
@@ -66,12 +71,13 @@ async def login(user: UserLogin):
 
     token = create_access_token(
         {
-            "email":
-            existing_user["email"]
+            "email": existing_user["email"],
+            "role": existing_user["role"]
         }
     )
 
     return {
         "access_token": token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "role": existing_user["role"]
     }
