@@ -4,91 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livora Admin - Settings</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        gold: '#C59D5F',
-                        dark: '#0D0D0D',
-                        light: '#F8F6F2'
+                        gold: "#C59D5F",
+                        dark: "#0D0D0D",
+                        light: "#F8F6F2"
                     }
                 }
             }
         }
     </script>
 </head>
+
 <body class="bg-light font-sans text-dark flex h-screen overflow-hidden">
 
+    <!-- Sidebar -->
     <aside class="w-64 bg-dark text-white flex flex-col h-full">
+
         <div class="p-6 text-center text-2xl font-bold tracking-widest text-gold border-b border-gray-800">
             LIVORA
         </div>
-        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-            <a href="dashboard.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Dashboard</a>
-            <a href="designs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Designs</a>
-            <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Orders</a>
-            <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Users</a>
-            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800 transition">Blogs</a>
-            <a href="settings.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">Settings</a>
+
+        <nav class="flex-1 px-4 py-6 space-y-2">
+
+            <a href="dashboard.html" class="block px-4 py-2 rounded hover:bg-gray-800">Dashboard</a>
+
+            <a href="designs.html" class="block px-4 py-2 rounded hover:bg-gray-800">Designs</a>
+
+            <a href="orders.html" class="block px-4 py-2 rounded hover:bg-gray-800">Orders</a>
+
+            <a href="users.html" class="block px-4 py-2 rounded hover:bg-gray-800">Users</a>
+
+            <a href="blogs.html" class="block px-4 py-2 rounded hover:bg-gray-800">Blogs</a>
+
+            <a href="settings.html" class="block px-4 py-2 rounded bg-gold text-dark font-semibold">
+                Settings
+            </a>
+
         </nav>
+
         <div class="p-4 border-t border-gray-800">
-            <button id="logoutBtn" class="w-full text-left px-4 py-2 text-red-400 hover:text-red-300 transition">Logout</button>
+
+            <button
+                id="logoutBtn"
+                class="w-full text-left px-4 py-2 text-red-400 hover:text-red-300">
+
+                Logout
+
+            </button>
+
         </div>
+
     </aside>
 
-    <main class="flex-1 flex flex-col h-full overflow-hidden">
-        
-        <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 border-b border-gray-200">
-            <h1 class="text-xl font-bold">Admin Settings</h1>
-            <div class="flex items-center gap-4">
-                <span class="text-sm font-medium">Welcome, Admin</span>
-                <div class="w-8 h-8 rounded-full bg-gold text-dark flex items-center justify-center font-bold">A</div>
+    <!-- Main Content -->
+
+    <main class="flex-1 flex flex-col overflow-hidden">
+
+        <header class="bg-white h-16 shadow flex items-center justify-between px-8 border-b">
+
+            <h1 class="text-xl font-bold">
+                Admin Settings
+            </h1>
+
+            <div class="flex items-center gap-3">
+
+                <span class="text-sm font-medium">
+                    Welcome, Admin
+                </span>
+
+                <div class="w-8 h-8 rounded-full bg-gold flex items-center justify-center font-bold">
+                    A
+                </div>
+
             </div>
+
         </header>
 
-        <div class="p-8 overflow-y-auto flex-1 max-w-3xl">
-            <form id="settingsForm" class="bg-white rounded-lg shadow-sm border border-gray-100 p-8">
-                
-                <h2 class="text-lg font-bold mb-6 border-b pb-2">Profile Information</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="flex-1 overflow-y-auto p-8">
+
+            <form
+                id="settingsForm"
+                class="bg-white rounded-lg shadow border p-8 max-w-3xl">
+
+                <!-- Profile -->
+
+                <h2 class="text-xl font-bold border-b pb-2 mb-6">
+                    Profile Information
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                        <input type="text" id="adminName" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold" value="Admin User">
+
+                        <label class="block text-sm font-medium mb-2">
+                            Full Name
+                        </label>
+
+                        <input
+                            id="adminName"
+                            type="text"
+                            placeholder="Enter your name"
+                            class="w-full border rounded p-3 focus:ring-2 focus:ring-gold focus:outline-none">
+
                     </div>
+
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                        <input type="email" id="adminEmail" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold" value="admin@livora.com">
+
+                        <label class="block text-sm font-medium mb-2">
+                            Email Address
+                        </label>
+
+                        <input
+                            id="adminEmail"
+                            type="email"
+                            placeholder="Enter your email"
+                            class="w-full border rounded p-3 focus:ring-2 focus:ring-gold focus:outline-none">
+
                     </div>
+
                 </div>
 
-                <h2 class="text-lg font-bold mb-6 mt-10 border-b pb-2">Change Password</h2>
+                <!-- Password -->
 
-                <div class="space-y-4 mb-8">
+                <h2 class="text-xl font-bold border-b pb-2 mt-10">
+                    Change Password
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-2 mb-6">
+                    Leave these fields blank if you only want to update your profile information.
+                </p>
+
+                <div class="space-y-5">
+
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
-                        <input type="password" id="currentPassword" class="w-full md:w-1/2 p-2 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold">
+
+                        <label class="block text-sm font-medium mb-2">
+                            Current Password
+                        </label>
+
+                        <input
+                            id="currentPassword"
+                            type="password"
+                            placeholder="Current password"
+                            class="w-full md:w-1/2 border rounded p-3 focus:ring-2 focus:ring-gold focus:outline-none">
+
                     </div>
+
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                        <input type="password" id="newPassword" class="w-full md:w-1/2 p-2 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold">
+
+                        <label class="block text-sm font-medium mb-2">
+                            New Password
+                        </label>
+
+                        <input
+                            id="newPassword"
+                            type="password"
+                            placeholder="New password"
+                            class="w-full md:w-1/2 border rounded p-3 focus:ring-2 focus:ring-gold focus:outline-none">
+
                     </div>
+
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-                        <input type="password" id="confirmPassword" class="w-full md:w-1/2 p-2 border border-gray-300 rounded focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold">
+
+                        <label class="block text-sm font-medium mb-2">
+                            Confirm New Password
+                        </label>
+
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            placeholder="Confirm new password"
+                            class="w-full md:w-1/2 border rounded p-3 focus:ring-2 focus:ring-gold focus:outline-none">
+
                     </div>
+
                 </div>
 
-                <div class="flex justify-end gap-4">
-                    <button type="button" class="px-6 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition">Cancel</button>
-                    <button type="submit" class="px-6 py-2 bg-dark text-white rounded hover:bg-gold transition">Save Changes</button>
+                <div class="flex justify-end gap-4 mt-10">
+
+                    <button
+                        type="reset"
+                        class="px-6 py-2 border rounded hover:bg-gray-100">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="px-6 py-2 bg-dark text-white rounded hover:bg-gold hover:text-dark transition">
+
+                        Save Changes
+
+                    </button>
+
                 </div>
+
             </form>
+
         </div>
+
     </main>
 
-    <script src="../js/admin.js"></script>
+    <script src="./js/settings.js"></script>
+
 </body>
 </html>
