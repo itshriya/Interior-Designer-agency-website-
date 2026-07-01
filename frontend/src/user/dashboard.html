@@ -1,329 +1,265 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livora User Dashboard</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: {
-                    gold:"#C59D5F",
-                    dark:"#0D0D0D",
-                    light:"#F8F6F2"
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: "#C59D5F",
+                        dark: "#0D0D0D",
+                        light: "#F8F6F2"
+                    }
                 }
             }
         }
-    }
-</script>
-
-
+    </script>
 </head>
-
 <body class="bg-light text-dark">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-dark text-white flex flex-col">
+            <div class="p-6 text-center border-b border-gray-800">
+                <h1 class="text-2xl font-bold text-gold">LIVORA</h1>
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="dashboard.html" class="block px-4 py-3 rounded bg-gold text-dark font-semibold">Dashboard</a>
+                <a href="consultations.html" class="block px-4 py-3 rounded hover:bg-gray-800">My Consultations</a>
+                <a href="saved-designs.html" class="block px-4 py-3 rounded hover:bg-gray-800">Saved Designs</a>
+                <a href="blogs.html" class="block px-4 py-3 rounded hover:bg-gray-800">Blogs</a>
+                <a href="profile.html" class="block px-4 py-3 rounded hover:bg-gray-800">Profile</a>
+            </nav>
+            <div class="p-4 border-t border-gray-800">
+                <button id="logoutBtn" class="w-full text-left text-red-400 hover:text-red-300">Logout</button>
+            </div>
+        </aside>
 
-<div class="flex min-h-screen">
+        <!-- Main Content -->
+        <main class="flex-1">
+            <header class="bg-white border-b px-8 py-5 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold">Welcome Back 👋</h2>
+                    <p class="text-gray-500">Manage your consultations and designs</p>
+                </div>
+                <button id="openModalBtn" class="bg-gold text-dark px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition">
+                    + Book Consultation
+                </button>
+            </header>
 
-<aside class="w-64 bg-dark text-white flex flex-col">
+            <div class="p-8">
+                <!-- Stats Cards -->
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <p class="text-gray-500">Consultations</p>
+                        <h3 id="consultationCount" class="text-4xl font-bold mt-2">0</h3>
+                    </div>
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <p class="text-gray-500">Saved Designs</p>
+                        <h3 id="savedDesignCount" class="text-4xl font-bold mt-2">0</h3>
+                    </div>
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <p class="text-gray-500">Favorite Blogs</p>
+                        <h3 id="blogCount" class="text-4xl font-bold mt-2">0</h3>
+                    </div>
+                </div>
 
-    <div class="p-6 text-center border-b border-gray-800">
-
-        <h1 class="text-2xl font-bold text-gold">
-            LIVORA
-        </h1>
-
+                <!-- Recent Consultations Table -->
+                <div class="bg-white rounded-xl shadow">
+                    <div class="p-6 border-b">
+                        <h3 class="text-xl font-semibold">Recent Consultations</h3>
+                    </div>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4">Project Type</th>
+                                <th class="text-left p-4">Date</th>
+                                <th class="text-left p-4">Budget</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consultationTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <nav class="flex-1 p-4 space-y-2">
-
-        <a
-            href="dashboard.html"
-            class="block px-4 py-3 rounded bg-gold text-dark font-semibold">
-
-            Dashboard
-
-        </a>
-
-        <a
-            href="consultations.html"
-            class="block px-4 py-3 rounded hover:bg-gray-800">
-
-            My Consultations
-
-        </a>
-
-        <a
-            href="saved-designs.html"
-            class="block px-4 py-3 rounded hover:bg-gray-800">
-
-            Saved Designs
-
-        </a>
-
-        <a
-            href="blogs.html"
-            class="block px-4 py-3 rounded hover:bg-gray-800">
-
-            Blogs
-
-        </a>
-
-        <a
-            href="profile.html"
-            class="block px-4 py-3 rounded hover:bg-gray-800">
-
-            Profile
-
-        </a>
-
-    </nav>
-
-    <div class="p-4 border-t border-gray-800">
-
-        <button
-            id="logoutBtn"
-            class="w-full text-left text-red-400 hover:text-red-300">
-
-            Logout
-
-        </button>
-
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6 mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold">Book a Consultation</h3>
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
+            </div>
+            <form id="consultationForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Full Name *</label>
+                    <input type="text" name="name" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Email *</label>
+                    <input type="email" name="email" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Phone *</label>
+                    <input type="tel" name="phone" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Project Type *</label>
+                    <input type="text" name="project_type" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" placeholder="e.g., Living Room, Kitchen">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Budget *</label>
+                    <input type="text" name="budget" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" placeholder="e.g., ₹50,000">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Preferred Date *</label>
+                    <input type="date" name="preferred_date" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Message *</label>
+                    <textarea name="message" rows="3" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" placeholder="Describe your project..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-gold text-dark font-semibold py-3 rounded-lg hover:bg-yellow-600 transition">
+                    Submit Request
+                </button>
+            </form>
+            <p id="modalMessage" class="text-sm text-center mt-3 hidden"></p>
+        </div>
     </div>
 
-</aside>
-
-<main class="flex-1">
-
-    <header class="bg-white border-b px-8 py-5 flex justify-between items-center">
-
-        <div>
-
-            <h2 class="text-2xl font-bold">
-                Welcome Back 👋
-            </h2>
-
-            <p class="text-gray-500">
-                Manage your consultations and designs
-            </p>
-
-        </div>
-
-    </header>
-
-    <div class="p-8">
-
-        <div class="grid md:grid-cols-3 gap-6 mb-8">
-
-            <div class="bg-white rounded-xl shadow p-6">
-
-                <p class="text-gray-500">
-                    Consultations
-                </p>
-
-                <h3
-                    id="consultationCount"
-                    class="text-4xl font-bold mt-2">
-
-                    0
-
-                </h3>
-
-            </div>
-
-            <div class="bg-white rounded-xl shadow p-6">
-
-                <p class="text-gray-500">
-                    Saved Designs
-                </p>
-
-                <h3
-                    id="savedDesignCount"
-                    class="text-4xl font-bold mt-2">
-
-                    0
-
-                </h3>
-
-            </div>
-
-            <div class="bg-white rounded-xl shadow p-6">
-
-                <p class="text-gray-500">
-                    Favorite Blogs
-                </p>
-
-                <h3
-                    id="blogCount"
-                    class="text-4xl font-bold mt-2">
-
-                    0
-
-                </h3>
-
-            </div>
-
-        </div>
-
-        <div class="bg-white rounded-xl shadow">
-
-            <div class="p-6 border-b">
-
-                <h3 class="text-xl font-semibold">
-                    Recent Consultations
-                </h3>
-
-            </div>
-
-            <table class="w-full">
-
-                <thead>
-
-                    <tr class="bg-gray-50">
-
-                        <th class="text-left p-4">
-                            Project Type
-                        </th>
-
-                        <th class="text-left p-4">
-                            Date
-                        </th>
-
-                        <th class="text-left p-4">
-                            Budget
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="consultationTable">
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-</main>
-
-
-</div>
-
-<script>
-
-if(!localStorage.getItem("token")){
-
-    window.location.href =
-    "../auth/login.html";
-
-}
-
-document
-.getElementById("logoutBtn")
-.addEventListener(
-    "click",
-    () => {
-
-        localStorage.removeItem(
-            "token"
-        );
-
-        localStorage.removeItem(
-            "role"
-        );
-
-        window.location.href =
-        "../auth/login.html";
-
-    }
-);
-
-const API_URL =
-"http://127.0.0.1:8000";
-
-async function loadDashboard(){
-
-    try{
-
-        const consultationsResponse =
-        await fetch(
-            `${API_URL}/consultations`
-        );
-
-        const consultations =
-        await consultationsResponse.json();
-
-        document
-        .getElementById(
-            "consultationCount"
-        )
-        .innerText =
-        consultations.length;
-
-        document
-        .getElementById(
-            "savedDesignCount"
-        )
-        .innerText =
-        "0";
-
-        document
-        .getElementById(
-            "blogCount"
-        )
-        .innerText =
-        "0";
-
-        const table =
-        document.getElementById(
-            "consultationTable"
-        );
-
-        consultations
-        .slice(0,5)
-        .forEach(item => {
-
-            table.innerHTML += `
-            <tr class="border-t">
-
-                <td class="p-4">
-                    ${item.project_type}
-                </td>
-
-                <td class="p-4">
-                    ${item.preferred_date}
-                </td>
-
-                <td class="p-4">
-                    ${item.budget}
-                </td>
-
-            </tr>
-            `;
+    <script>
+        // Auth guard
+        if (!localStorage.getItem("token")) {
+            window.location.href = "../auth/login.html";
+        }
+
+        // Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+            window.location.href = "../auth/login.html";
         });
 
-    }
+        const API_URL = "http://127.0.0.1:8000";
+        const token = localStorage.getItem("token");
 
-    catch(error){
+        // Modal elements
+        const modal = document.getElementById("bookingModal");
+        const openBtn = document.getElementById("openModalBtn");
+        const closeBtn = document.getElementById("closeModalBtn");
+        const form = document.getElementById("consultationForm");
+        const modalMessage = document.getElementById("modalMessage");
 
-        console.error(
-            error
-        );
+        openBtn.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            modalMessage.classList.add("hidden");
+            form.reset();
+        });
 
-    }
+        closeBtn.addEventListener("click", () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        });
 
-}
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+            }
+        });
 
-loadDashboard();
+        // Submit new consultation
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const payload = {
+                name: formData.get("name"),
+                email: formData.get("email"),
+                phone: formData.get("phone"),
+                project_type: formData.get("project_type"),
+                budget: formData.get("budget"),
+                preferred_date: formData.get("preferred_date"),
+                message: formData.get("message"),
+                // status is set by the backend automatically
+            };
 
-</script>
+            try {
+                const res = await fetch(`${API_URL}/consultation`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
 
+                const data = await res.json();
+
+                if (!res.ok) {
+                    // FastAPI returns a detail array for validation errors
+                    const error = new Error("Validation failed");
+                    error.details = data.detail;
+                    throw error;
+                }
+
+                // Success
+                modalMessage.textContent = "Consultation booked successfully!";
+                modalMessage.classList.remove("hidden", "text-red-600");
+                modalMessage.classList.add("text-green-600");
+
+                setTimeout(() => {
+                    modal.classList.add("hidden");
+                    modal.classList.remove("flex");
+                    loadDashboard();
+                }, 1500);
+
+            } catch (err) {
+                let message = "Booking failed";
+                if (err.details && Array.isArray(err.details)) {
+                    message = err.details.map(d => d.msg).join(", ");
+                } else {
+                    message = err.message;
+                }
+                modalMessage.textContent = message;
+                modalMessage.classList.remove("hidden", "text-green-600");
+                modalMessage.classList.add("text-red-600");
+            }
+        });
+
+        // Load dashboard
+        async function loadDashboard() {
+            try {
+                const res = await fetch(`${API_URL}/consultations`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                const consultations = await res.json();
+
+                document.getElementById("consultationCount").innerText = consultations.length;
+                document.getElementById("savedDesignCount").innerText = "0";
+                document.getElementById("blogCount").innerText = "0";
+
+                const table = document.getElementById("consultationTable");
+                table.innerHTML = "";
+
+                consultations.slice(0, 5).forEach(item => {
+                    table.innerHTML += `
+                    <tr class="border-t">
+                        <td class="p-4">${item.project_type}</td>
+                        <td class="p-4">${item.preferred_date}</td>
+                        <td class="p-4">${item.budget}</td>
+                    </tr>`;
+                });
+            } catch (error) {
+                console.error("Dashboard load failed:", error);
+            }
+        }
+
+        loadDashboard();
+    </script>
 </body>
 </html>

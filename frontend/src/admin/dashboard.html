@@ -1,9 +1,5 @@
-<script>
-if(!localStorage.getItem("token")){
-    window.location.href =
-    "../auth/login.html";
-}
-</script>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +21,7 @@ if(!localStorage.getItem("token")){
 </head>
 <body class="bg-light font-sans text-dark flex h-screen overflow-hidden">
 
+    <!-- Sidebar -->
     <aside class="w-64 bg-dark text-white flex flex-col h-full">
         <div class="p-6 text-center text-2xl font-bold tracking-widest text-gold border-b border-gray-800">
             LIVORA
@@ -42,6 +39,7 @@ if(!localStorage.getItem("token")){
         </div>
     </aside>
 
+    <!-- Main Content -->
     <main class="flex-1 flex flex-col h-full overflow-hidden">
         
         <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 border-b border-gray-200">
@@ -54,58 +52,52 @@ if(!localStorage.getItem("token")){
 
         <div class="p-8 overflow-y-auto flex-1">
             
-           <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" id="statsContainer">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-sm text-gray-500 mb-1">Registered Users</h3>
+                    <p id="userCount" class="text-3xl font-bold">—</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-sm text-gray-500 mb-1">Total Projects</h3>
+                    <p id="projectCount" class="text-3xl font-bold">—</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-sm text-gray-500 mb-1">Consultation Requests</h3>
+                    <p id="consultationCount" class="text-3xl font-bold">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="text-sm text-gray-500 mb-1">Contact Messages</h3>
+                    <p id="contactCount" class="text-3xl font-bold text-gold">0</p>
+                </div>
+            </div>
 
-    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <h3 class="text-sm text-gray-500 mb-1">
-            Registered Users
-        </h3>
+            <!-- Consultation Management Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-gray-100">
+                    <h2 class="font-bold text-lg">Consultation Requests</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-600 text-sm">
+                                <th class="px-6 py-3 border-b">Name</th>
+                                <th class="px-6 py-3 border-b">Email</th>
+                                <th class="px-6 py-3 border-b">Project Type</th>
+                                <th class="px-6 py-3 border-b">Date</th>
+                                <th class="px-6 py-3 border-b">Budget</th>
+                                <th class="px-6 py-3 border-b">Status</th>
+                                <th class="px-6 py-3 border-b">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consultationTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <p
-            id="userCount"
-            class="text-3xl font-bold">
-            0
-        </p>
-    </div>
-
-    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <h3 class="text-sm text-gray-500 mb-1">
-            Total Projects
-        </h3>
-
-        <p
-            id="projectCount"
-            class="text-3xl font-bold">
-            0
-        </p>
-    </div>
-
-    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <h3 class="text-sm text-gray-500 mb-1">
-            Consultation Requests
-        </h3>
-
-        <p
-            id="consultationCount"
-            class="text-3xl font-bold">
-            0
-        </p>
-    </div>
-
-    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <h3 class="text-sm text-gray-500 mb-1">
-            Contact Messages
-        </h3>
-
-        <p
-            id="contactCount"
-            class="text-3xl font-bold text-gold">
-            0
-        </p>
-    </div>
-
-</div>
-
+            <!-- Recent Orders Table -->
             <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
                     <h2 class="font-bold text-lg">Recent Orders</h2>
@@ -122,12 +114,7 @@ if(!localStorage.getItem("token")){
                             </tr>
                         </thead>
                         <tbody id="recentOrdersTable">
-                            <tr class="hover:bg-gray-50 border-b border-gray-50">
-                                <td class="px-6 py-4 text-sm">#ORD-001</td>
-                                <td class="px-6 py-4 text-sm">jane@example.com</td>
-                                <td class="px-6 py-4 text-sm">Modern Living Room</td>
-                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-800">Pending</span></td>
-                            </tr>
+                            <!-- Populated by JS -->
                         </tbody>
                     </table>
                 </div>
@@ -135,19 +122,8 @@ if(!localStorage.getItem("token")){
 
         </div>
     </main>
-<script>
 
-document
-.getElementById("logoutBtn")
-.addEventListener("click", () => {
-
-    localStorage.removeItem("token");
-
-    window.location.href =
-        "../auth/login.html";
-
-});
-
-</script>
+    <!-- External JS -->
     <script src="./js/admin.js"></script>
 </body>
+</html>
