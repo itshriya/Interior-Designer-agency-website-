@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Livora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C59D5F',
+                        dark: '#0D0D0D',
+                        light: '#F8F6F2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light text-dark">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar – same as before -->
+    <aside class="w-64 bg-dark text-white flex flex-col">
+        <div class="p-6 text-center border-b border-gray-800">
+            <h1 class="text-2xl font-bold text-gold">LIVORA</h1>
+        </div>
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="dashboard.html" class="block px-4 py-3 rounded hover:bg-gray-800">Dashboard</a>
+            <a href="consultations.html" class="block px-4 py-3 rounded hover:bg-gray-800">My Consultations</a>
+            <a href="saved-designs.html" class="block px-4 py-3 rounded hover:bg-gray-800">Saved Designs</a>
+            <a href="blogs.html" class="block px-4 py-3 rounded hover:bg-gray-800">Blogs</a>
+            <a href="profile.html" class="block px-4 py-3 rounded bg-gold text-dark font-semibold">Profile</a>
+        </nav>
+        <div class="p-4 border-t border-gray-800">
+            <button id="logoutBtn" class="w-full text-left text-red-400 hover:text-red-300">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <header class="mb-8">
+            <h2 class="text-2xl font-bold">My Profile</h2>
+            <p class="text-gray-500">Manage your personal information</p>
+        </header>
+
+        <!-- Profile Card -->
+        <div class="bg-white rounded-xl shadow p-8 max-w-2xl">
+            <div class="flex items-center gap-6 mb-8">
+                <div class="w-20 h-20 rounded-full bg-gold text-dark flex items-center justify-center text-2xl font-bold">
+                    <span id="profileInitials">U</span>
+                </div>
+                <div>
+                    <h3 id="profileName" class="text-2xl font-semibold">—</h3>
+                    <p id="profileEmail" class="text-gray-500">—</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm text-gray-500 mb-1">Full Name</label>
+                    <p id="detailName" class="font-medium text-lg">—</p>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-500 mb-1">Email Address</label>
+                    <p id="detailEmail" class="font-medium text-lg">—</p>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-500 mb-1">Phone Number</label>
+                    <p id="detailPhone" class="font-medium text-lg">—</p>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-500 mb-1">Member Since</label>
+                    <p id="detailJoined" class="font-medium text-lg">—</p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-100">
+                <button id="editProfileBtn" class="px-6 py-2 bg-dark text-white rounded-lg hover:bg-gold transition text-sm font-medium">
+                    Edit Profile
+                </button>
+                <p class="text-xs text-gray-400 mt-2">Update your name or phone number.</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6 mx-4">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-semibold">Edit Profile</h3>
+            <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
+        </div>
+        <form id="editProfileForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Full Name</label>
+                <input type="text" name="name" id="editName" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Phone Number</label>
+                <input type="tel" name="phone" id="editPhone" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold">
+            </div>
+            <button type="submit" class="w-full bg-gold text-dark font-semibold py-3 rounded-lg hover:bg-yellow-600 transition">
+                Save Changes
+            </button>
+        </form>
+        <p id="editMessage" class="text-sm text-center mt-3 hidden"></p>
+    </div>
+</div>
+
+<script>
+    // ---------- Auth guard ----------
+    if (!localStorage.getItem("token")) {
+        window.location.href = "../auth/login.html";
+    }
+
+    // ---------- Logout ----------
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        window.location.href = "../auth/login.html";
+    });
+
+    const API_URL = "http://127.0.0.1:8000";
+    const token = localStorage.getItem("token");
+
+    let currentUser = {};   // store loaded profile data
+
+    // ---------- Modal logic ----------
+    const modal = document.getElementById("editModal");
+    const openBtn = document.getElementById("editProfileBtn");
+    const closeBtn = document.getElementById("closeModalBtn");
+    const form = document.getElementById("editProfileForm");
+    const messageEl = document.getElementById("editMessage");
+
+    openBtn.addEventListener("click", () => {
+        // Pre-fill form with current data
+        document.getElementById("editName").value = currentUser.name || "";
+        document.getElementById("editPhone").value = currentUser.phone || "";
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        messageEl.classList.add("hidden");
+    });
+
+    closeBtn.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+    });
+
+    // Close on backdrop click
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+    });
+
+    // ---------- Load user profile ----------
+    async function loadProfile() {
+        try {
+            const res = await fetch(`${API_URL}/profile`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!res.ok) throw new Error("Failed to load profile");
+
+            const user = await res.json();
+            currentUser = user;   // save for later
+
+            const name = user.name || "User";
+            const email = user.email || "";
+            const phone = user.phone || "Not provided";
+            const joined = user.created_at ? new Date(user.created_at).toLocaleDateString("en-IN", {
+                year: 'numeric', month: 'long', day: 'numeric'
+            }) : "N/A";
+
+            document.getElementById("profileName").innerText = name;
+            document.getElementById("profileEmail").innerText = email;
+            document.getElementById("detailName").innerText = name;
+            document.getElementById("detailEmail").innerText = email;
+            document.getElementById("detailPhone").innerText = phone;
+            document.getElementById("detailJoined").innerText = joined;
+
+            const initials = name.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2);
+            document.getElementById("profileInitials").innerText = initials || "U";
+        } catch (error) {
+            console.error("Profile error:", error);
+            document.getElementById("profileName").innerText = "Could not load profile";
+        }
+    }
+
+    // ---------- Handle form submit (update profile) ----------
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const payload = {};
+        // Only send fields that are not empty
+        const name = formData.get("name").trim();
+        const phone = formData.get("phone").trim();
+        if (name) payload.name = name;
+        if (phone) payload.phone = phone;
+
+        if (Object.keys(payload).length === 0) {
+            messageEl.textContent = "No changes to save.";
+            messageEl.classList.remove("hidden", "text-green-600", "text-red-600");
+            messageEl.classList.add("text-gray-600");
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_URL}/profile`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || "Update failed");
+
+            messageEl.textContent = "Profile updated successfully!";
+            messageEl.classList.remove("hidden", "text-red-600");
+            messageEl.classList.add("text-green-600");
+
+            // Refresh profile view and close modal after a moment
+            setTimeout(() => {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+                loadProfile();
+            }, 1000);
+        } catch (err) {
+            messageEl.textContent = err.message;
+            messageEl.classList.remove("hidden", "text-green-600");
+            messageEl.classList.add("text-red-600");
+        }
+    });
+
+    loadProfile();
+</script>
+</body>
+</html>

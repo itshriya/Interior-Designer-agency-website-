@@ -12,6 +12,8 @@ from app.routes.dashboard import router as dashboard_router
 from app.routes.blog import router as blog_router
 from app.routes.settings import router as settings_router
 from app.routes.users import router as users_router
+from app.routes.profiles import router as profile_router
+from app.routes.saved_design import router as saved_designs_router
 app = FastAPI()
 
 app.add_middleware(
@@ -39,6 +41,8 @@ app.include_router(
     prefix="/users",
     tags=["Users"]
 )
+app.include_router(profile_router, tags=["Profile"])
+app.include_router(saved_designs_router, tags=["Saved Designs"])
 @app.get("/")
 async def root():
 

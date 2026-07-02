@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Designs | Livora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C59D5F',
+                        dark: '#0D0D0D',
+                        light: '#F8F6F2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light text-dark">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar (unchanged) -->
+    <aside class="w-64 bg-dark text-white flex flex-col">
+        <div class="p-6 text-center border-b border-gray-800">
+            <h1 class="text-2xl font-bold text-gold">LIVORA</h1>
+        </div>
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="dashboard.html" class="block px-4 py-3 rounded hover:bg-gray-800">Dashboard</a>
+            <a href="consultations.html" class="block px-4 py-3 rounded hover:bg-gray-800">My Consultations</a>
+            <a href="saved-designs.html" class="block px-4 py-3 rounded bg-gold text-dark font-semibold">Saved Designs</a>
+            <a href="blogs.html" class="block px-4 py-3 rounded hover:bg-gray-800">Blogs</a>
+            <a href="profile.html" class="block px-4 py-3 rounded hover:bg-gray-800">Profile</a>
+        </nav>
+        <div class="p-4 border-t border-gray-800">
+            <button id="logoutBtn" class="w-full text-left text-red-400 hover:text-red-300">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <header class="mb-8">
+            <h2 class="text-2xl font-bold">Saved Collection</h2>
+            <p class="text-gray-500">Your favourite designs & blogs</p>
+        </header>
+
+        <div id="loading" class="text-center py-10 text-gray-500">Loading saved items...</div>
+
+        <div id="itemsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+        <div id="emptyState" class="text-center py-16 hidden">
+            <p class="text-gray-400 text-lg">Nothing saved yet.</p>
+            <a href="blogs.html" class="text-gold hover:underline mt-2 inline-block">Explore blogs →</a>
+        </div>
+    </main>
+</div>
+
+<script>
+    if (!localStorage.getItem("token")) {
+        window.location.href = "../auth/login.html";
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        window.location.href = "../auth/login.html";
+    });
+
+    const API_URL = "http://127.0.0.1:8000";
+    const token = localStorage.getItem("token");
+
+    async function loadSavedItems() {
+        const loading = document.getElementById("loading");
+        const grid = document.getElementById("itemsGrid");
+        const empty = document.getElementById("emptyState");
+
+        try {
+            const res = await fetch(`${API_URL}/saved-designs`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error("Failed to fetch saved items");
+            const items = await res.json();
+
+            loading.classList.add("hidden");
+
+            if (!items || items.length === 0) {
+                empty.classList.remove("hidden");
+                return;
+            }
+
+            grid.innerHTML = "";
+            items.forEach(item => {
+                const badge = item.type === "blog"
+                    ? `<span class="absolute top-2 left-2 bg-gold text-dark text-xs px-2 py-0.5 rounded-full font-medium">Blog</span>`
+                    : `<span class="absolute top-2 left-2 bg-gray-200 text-dark text-xs px-2 py-0.5 rounded-full font-medium">Design</span>`;
+
+                const card = document.createElement("div");
+                card.className = "bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition relative";
+                card.innerHTML = `
+                    <img src="${item.image_url}" class="w-full h-48 object-cover">
+                    ${badge}
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-1">${item.title}</h3>
+                        <p class="text-sm text-gray-500 mb-3">${item.category || ""}</p>
+                        <button class="remove-btn text-red-500 text-sm hover:text-red-700" data-id="${item._id}">
+                            Remove
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Remove button handlers
+            document.querySelectorAll(".remove-btn").forEach(btn => {
+                btn.addEventListener("click", async (e) => {
+                    const itemId = e.target.dataset.id;
+                    if (!confirm("Remove this item?")) return;
+                    try {
+                        await fetch(`${API_URL}/saved-designs/${itemId}`, {
+                            method: "DELETE",
+                            headers: { "Authorization": `Bearer ${token}` }
+                        });
+                        loadSavedItems();
+                    } catch (err) {
+                        alert("Failed to remove item");
+                    }
+                });
+            });
+
+        } catch (error) {
+            console.error(error);
+            loading.innerText = "Failed to load saved items";
+        }
+    }
+
+    loadSavedItems();
+</script>
+</body>
+</html>
